@@ -51,3 +51,10 @@ MyPageName = My page name
 #
 MyWidget = My widget
 MyWidgetDescription = My widget description
+
+
+CompetitorPrice=Prix Concurrents
+CompetitorPrices=Prix Concurrents
+AddCompetitorPrice=Ajouter un prix concurrent
+Competitor=Concurrent
+URLCompetitor=URL page produit

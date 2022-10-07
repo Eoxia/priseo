@@ -23,12 +23,12 @@ CREATE TABLE llx_priseo_competitorprice(
 	fk_soc integer NOT NULL, 
 	amount double DEFAULT NULL, 
 	note_public text, 
+	url_competitor varchar(1024), 
 	note_private text, 
 	date_creation datetime NOT NULL, 
 	tms timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
 	fk_user_creat integer NOT NULL, 
 	fk_user_modif integer, 
-	import_key varchar(14), 
-	status integer DEFAULT 1 NOT NULL
+	import_key varchar(14)
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;
