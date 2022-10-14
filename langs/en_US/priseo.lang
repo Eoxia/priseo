@@ -58,3 +58,4 @@ CompetitorPrices=Prix Concurrents
 AddCompetitorPrice=Ajouter un prix concurrent
 Competitor=Concurrent
 URLCompetitor=URL page produit
+ConfirmDeleteProductCompetitorPrice=Confirmer la suppression du prix concurrent

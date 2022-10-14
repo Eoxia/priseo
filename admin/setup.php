@@ -79,8 +79,8 @@ $scandir = GETPOST('scan_dir', 'alpha');
 $type = 'myobject';
 
 $arrayofparameters = array(
-	'PRISEO_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
-	'PRISEO_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
+	//'PRISEO_MYPARAM1'=>array('type'=>'string', 'css'=>'minwidth500' ,'enabled'=>1),
+	//'PRISEO_MYPARAM2'=>array('type'=>'textarea','enabled'=>1),
 	//'PRISEO_MYPARAM3'=>array('type'=>'category:'.Categorie::TYPE_CUSTOMER, 'enabled'=>1),
 	//'PRISEO_MYPARAM4'=>array('type'=>'emailtemplate:thirdparty', 'enabled'=>1),
 	//'PRISEO_MYPARAM5'=>array('type'=>'yesno', 'enabled'=>1),

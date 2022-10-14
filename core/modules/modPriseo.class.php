@@ -144,8 +144,8 @@ class modPriseo extends DolibarrModules
 		$this->langfiles = array("priseo@priseo");
 
 		// Prerequisites
-		$this->phpmin = array(5, 6); // Minimum version of PHP required by module
-		$this->need_dolibarr_version = array(11, -3); // Minimum version of Dolibarr required by module
+		$this->phpmin = array(7, 3); // Minimum version of PHP required by module
+		$this->need_dolibarr_version = array(15, -3); // Minimum version of Dolibarr required by module
 
 		// Messages at activation
 		$this->warnings_activation = array(); // Warning to show when we activate module. array('always'='text') or array('FR'='textfr','MX'='textmx'...)

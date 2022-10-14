@@ -91,6 +91,7 @@ $langs->loadLangs(array("priseo@priseo", "other"));
 
 // Get parameters
 $id = GETPOST('id', 'int');
+$rowid = GETPOST('rowid', 'int');
 $ref = GETPOST('ref', 'alpha');
 $action = GETPOST('action', 'aZ09');
 $confirm = GETPOST('confirm', 'alpha');
@@ -125,6 +126,13 @@ $object = new Product($db);
 $extrafields = new ExtraFields($db);
 $diroutputmassaction = $conf->priseo->dir_output . '/temp/massgeneration/' . $user->id;
 $hookmanager->initHooks(array('competitorpricecard', 'globalcard')); // Note that conf->hooks_modules contains array
+
+if (!empty($rowid)) {
+	$resultFetch = $competitorPrice->fetch($rowid);
+	if ($resultFetch < 0) {
+		setEventMessages($competitorPrice->error, $competitorPrice->errors, 'errors');
+	}
+}
 
 // Definition of array of fields for columns
 $arrayfields = array();
@@ -205,7 +213,7 @@ if ($reshook < 0) {
 if (empty($reshook)) {
 	$error = 0;
 
-	$backurlforlist = dol_buildpath('/priseo/competitorprice_list.php', 1);
+	$backurlforlist = dol_buildpath('/priseo/competitorprice_card.php', 1).'?id='.$id;
 
 	if (empty($backtopage) || ($cancel && empty($id))) {
 		if (empty($backtopage) || ($cancel && strpos($backtopage, '__ID__'))) {
@@ -222,35 +230,36 @@ if (empty($reshook)) {
 	//Tricks to use common template
 	$product = $object;
 	$object = $competitorPrice;
+	if (empty($object->id)) {
 	$object->fk_product = $product->id;
-
+	}
 	// Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
 	include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
 
 	// Actions when linking object each other
-	include DOL_DOCUMENT_ROOT . '/core/actions_dellink.inc.php';
+	//include DOL_DOCUMENT_ROOT . '/core/actions_dellink.inc.php';
 
 	// Actions when printing a doc from card
-	include DOL_DOCUMENT_ROOT . '/core/actions_printing.inc.php';
+	//include DOL_DOCUMENT_ROOT . '/core/actions_printing.inc.php';
 
 	// Action to move up and down lines of object
 	//include DOL_DOCUMENT_ROOT.'/core/actions_lineupdown.inc.php';
 
 	// Action to build doc
-	include DOL_DOCUMENT_ROOT . '/core/actions_builddoc.inc.php';
+	//include DOL_DOCUMENT_ROOT . '/core/actions_builddoc.inc.php';
 
-	if ($action == 'set_thirdparty' && $permissiontoadd) {
+	/*if ($action == 'set_thirdparty' && $permissiontoadd) {
 		$object->setValueFrom('fk_soc', GETPOST('fk_soc', 'int'), '', '', 'date', '', $user, $triggermodname);
 	}
 	if ($action == 'classin' && $permissiontoadd) {
 		$object->setProject(GETPOST('projectid', 'int'));
-	}
+	}*/
 
 	// Actions to send emails
-	$triggersendname = 'PRISEO_COMPETITORPRICE_SENTBYMAIL';
-	$autocopy = 'MAIN_MAIL_AUTOCOPY_COMPETITORPRICE_TO';
-	$trackid = 'competitorprice' . $object->id;
-	include DOL_DOCUMENT_ROOT . '/core/actions_sendmails.inc.php';
+	//$triggersendname = 'PRISEO_COMPETITORPRICE_SENTBYMAIL';
+	//$autocopy = 'MAIN_MAIL_AUTOCOPY_COMPETITORPRICE_TO';
+	//$trackid = 'competitorprice' . $object->id;
+	//include DOL_DOCUMENT_ROOT . '/core/actions_sendmails.inc.php';
 
 	//Tricks to use common template
 	$object = $product;
@@ -287,7 +296,7 @@ if ($object->id > 0) {
 
 	if ($action == 'ask_remove_cp') {
 		$form = new Form($db);
-		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id . '&rowid=' . $competitorPrice->id, $langs->trans('DeleteProductCompetitorPrice'), $langs->trans('ConfirmDeleteProductCompetitorPrice'), 'confirm_remove_cp', '', 0, 1);
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id . '&rowid=' . $competitorPrice->id, $langs->trans('DeleteProductCompetitorPrice'), $langs->trans('ConfirmDeleteProductCompetitorPrice'), 'confirm_delete', '', 0, 1);
 		echo $formconfirm;
 	}
 
@@ -340,7 +349,7 @@ if ($object->id > 0) {
 		$reshook = $hookmanager->executeHooks('addMoreActionsButtons', $parameters, $object, $action); // Note that $action and $object may have been modified by hook
 		if (empty($reshook)) {
 			if ($permissiontoadd) {
-				print '<a class="butAction" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=create_competotor_price&token=' . newToken() . '">';
+				print '<a class="butAction" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=create_competitor_price&token=' . newToken() . '">';
 				print $langs->trans("AddCompetitorPrice") . '</a>';
 			}
 		}
@@ -348,7 +357,7 @@ if ($object->id > 0) {
 
 	print "</div>\n";
 
-	if ($action == 'create_competotor_price') {
+	if ($action == 'create_competitor_price') {
 
 		//Tricks to use common template
 		$product = $object;
@@ -390,6 +399,53 @@ if ($object->id > 0) {
 		print dol_get_fiche_end();
 
 		print $form->buttonsSaveCancel("Create");
+
+		print '</form>';
+
+		$object = $product;
+	} elseif ($action == 'update_competitor_price') {
+
+		//Tricks to use common template
+		$product = $object;
+		$object = $competitorPrice;
+
+		if (empty($permissiontoadd)) {
+			accessforbidden($langs->trans('NotEnoughPermissions'), 0, 1);
+			exit;
+		}
+
+		print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("CompetitorPrices")), '', 'object_' . $object->picto);
+
+		print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';
+		print '<input type="hidden" name="token" value="' . newToken() . '">';
+		print '<input type="hidden" name="action" value="update">';
+		print '<input type="hidden" name="id" value="' . $product->id . '">';
+		print '<input type="hidden" name="rowid" value="' . $object->id . '">';
+		if ($backtopage) {
+			print '<input type="hidden" name="backtopage" value="' . $backtopage . '">';
+		}
+		if ($backtopageforcancel) {
+			print '<input type="hidden" name="backtopageforcancel" value="' . $backtopageforcancel . '">';
+		}
+
+		print dol_get_fiche_head(array(), '');
+
+		// Set some default values
+		//if (! GETPOSTISSET('fieldname')) $_POST['fieldname'] = 'myvalue';
+
+		print '<table class="border centpercent tableforfieldedit">' . "\n";
+
+		// Common attributes
+		include DOL_DOCUMENT_ROOT . '/core/tpl/commonfields_edit.tpl.php';
+
+		// Other attributes
+		//include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_add.tpl.php';
+
+		print '</table>' . "\n";
+
+		print dol_get_fiche_end();
+
+		print $form->buttonsSaveCancel("Save");
 
 		print '</form>';
 
@@ -510,7 +566,7 @@ if ($object->id > 0) {
 				print '<td class="center nowraponall">';
 
 				if ($permissiontoadd) {
-					print '<a class="editfielda" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&amp;socid=' . $competitorPriceDetail->fk_soc . '&amp;action=update_price&amp;rowid=' . $competitorPriceDetail->id . '">' . img_edit() . "</a>";
+					print '<a class="editfielda" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&amp;socid=' . $competitorPriceDetail->fk_soc . '&amp;action=update_competitor_price&amp;rowid=' . $competitorPriceDetail->id . '">' . img_edit() . "</a>";
 					print ' &nbsp; ';
 					print '<a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&amp;socid=' . $competitorPriceDetail->fk_soc . '&amp;action=ask_remove_cp&amp;rowid=' . $competitorPriceDetail->id . '">' . img_picto($langs->trans("Remove"), 'delete') . '</a>';
 				}
