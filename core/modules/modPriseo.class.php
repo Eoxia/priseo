@@ -2,7 +2,7 @@
 /* Copyright (C) 2004-2018  Laurent Destailleur     <eldy@users.sourceforge.net>
  * Copyright (C) 2018-2019  Nicolas ZABOURI         <info@inovea-conseil.com>
  * Copyright (C) 2019-2020  Frédéric France         <frederic.france@netlogic.fr>
- * Copyright (C) 2022 Alice Adminson <aadminson@example.com>
+ * Copyright (C) 2022 Florian HENRY <floria.henry@scopen.fr>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ class modPriseo extends DolibarrModules
 
 		// Id for module (must be unique).
 		// Use here a free id (See in Home -> System information -> Dolibarr for list of used modules id).
-		$this->numero = 500000; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
+		$this->numero = 43635; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
 
 		// Key text used to identify module (for permissions, menus, etc...)
 		$this->rights_class = 'priseo';
@@ -68,7 +68,7 @@ class modPriseo extends DolibarrModules
 		$this->descriptionlong = "PriseoDescription";
 
 		// Author
-		$this->editor_name = 'Editor name';
+		$this->editor_name = 'https://';
 		$this->editor_url = 'https://www.example.com';
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
@@ -290,7 +290,7 @@ class modPriseo extends DolibarrModules
 		$r = 0;
 		// Add here entries to declare new menus
 		/* BEGIN MODULEBUILDER TOPMENU */
-		$this->menu[$r++] = array(
+		/*$this->menu[$r++] = array(
 			'fk_menu'=>'', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'top', // This is a Top menu entry
 			'titre'=>'ModulePriseoName',
@@ -304,7 +304,7 @@ class modPriseo extends DolibarrModules
 			'perms'=>'1', // Use 'perms'=>'$user->rights->priseo->competitorprice->read' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
-		);
+		);*/
 		/* END MODULEBUILDER TOPMENU */
 		/* BEGIN MODULEBUILDER LEFTMENU COMPETITORPRICE
 		$this->menu[$r++]=array(
@@ -352,7 +352,7 @@ class modPriseo extends DolibarrModules
 		);
 		*/
 
-        $this->menu[$r++]=array(
+       /* $this->menu[$r++]=array(
             // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'fk_menu'=>'fk_mainmenu=priseo',
             // This is a Left menu entry
@@ -391,7 +391,7 @@ class modPriseo extends DolibarrModules
             'target'=>'',
             // 0=Menu for internal users, 1=external users, 2=both
             'user'=>2
-        );
+        );*/
 
 		/* END MODULEBUILDER LEFTMENU COMPETITORPRICE */
 		// Exports profiles provided by this module
