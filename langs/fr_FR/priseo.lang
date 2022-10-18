@@ -53,7 +53,7 @@ MyWidget = My widget
 MyWidgetDescription = My widget description
 
 
-CompetitorPrice=Prix Concurrents
+CompetitorPriceTTC=Prix Concurrents TTC
 CompetitorPrices=Prix Concurrents
 AddCompetitorPrice=Ajouter un prix concurrent
 Competitor=Concurrent
