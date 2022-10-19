@@ -1,4 +1,5 @@
 -- Copyright (C) 2022 Florian HENRY <floria.henry@scopen.fr>
+-- Copyright (C) 2022 EOXIA <dev@eoxia.com>
 --
 -- This program is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -13,18 +14,12 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see https://www.gnu.org/licenses/.
 
-
--- BEGIN MODULEBUILDER INDEXES
 ALTER TABLE llx_priseo_competitorprice ADD INDEX idx_priseo_competitorprice_rowid (rowid);
 ALTER TABLE llx_priseo_competitorprice ADD INDEX idx_priseo_competitorprice_ref (ref);
-ALTER TABLE llx_priseo_competitorprice ADD CONSTRAINT llx_priseo_competitorprice_fk_product FOREIGN KEY (fk_product) REFERENCES llx_product(rowid);
-ALTER TABLE llx_priseo_competitorprice ADD INDEX idx_priseo_competitorprice_fk_soc (fk_soc);
-ALTER TABLE llx_priseo_competitorprice ADD CONSTRAINT llx_priseo_competitorprice_fk_soc FOREIGN KEY (fk_soc) REFERENCES llx_societe(rowid);
-ALTER TABLE llx_priseo_competitorprice ADD CONSTRAINT llx_priseo_competitorprice_fk_user_creat FOREIGN KEY (fk_user_creat) REFERENCES llx_user(rowid);
 ALTER TABLE llx_priseo_competitorprice ADD INDEX idx_priseo_competitorprice_status (status);
--- END MODULEBUILDER INDEXES
-
---ALTER TABLE llx_priseo_competitorprice ADD UNIQUE INDEX uk_priseo_competitorprice_fieldxy(fieldx, fieldy);
-
---ALTER TABLE llx_priseo_competitorprice ADD CONSTRAINT llx_priseo_competitorprice_fk_field FOREIGN KEY (fk_field) REFERENCES llx_priseo_myotherobject(rowid);
-
+ALTER TABLE llx_priseo_competitorprice ADD INDEX idx_priseo_competitorprice_fk_soc (fk_soc);
+ALTER TABLE llx_priseo_competitorprice ADD INDEX idx_priseo_competitorprice_fk_product (fk_product);
+ALTER TABLE llx_priseo_competitorprice ADD INDEX idx_priseo_competitorprice_fk_user_creat (fk_user_creat);
+ALTER TABLE llx_priseo_competitorprice ADD CONSTRAINT llx_priseo_competitorprice_fk_soc FOREIGN KEY (fk_soc) REFERENCES llx_societe(rowid);
+ALTER TABLE llx_priseo_competitorprice ADD CONSTRAINT llx_priseo_competitorprice_fk_product FOREIGN KEY (fk_product) REFERENCES llx_product(rowid);
+ALTER TABLE llx_priseo_competitorprice ADD CONSTRAINT llx_priseo_competitorprice_fk_user_creat FOREIGN KEY (fk_user_creat) REFERENCES llx_user(rowid);
