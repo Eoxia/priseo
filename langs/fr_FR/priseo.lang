@@ -53,10 +53,27 @@ MyWidget = My widget
 MyWidgetDescription = My widget description
 
 
-CompetitorPriceTTC=Prix Concurrents TTC
-CompetitorPrices=Prix Concurrents
-AddCompetitorPrice=Ajouter un prix concurrent
-Competitor=Concurrent
-URLCompetitor=URL page produit
-ConfirmDeleteProductCompetitorPrice=Confirmer la suppression du prix concurrent
-DeleteProductCompetitorPrice=Suppression du prix concurrent
+
+#
+# CompetitorPrice - Prix concurrent
+#
+
+# Right - Droit
+
+
+# Trigger - Déclencheur
+
+
+# Mod Numbering - Modèle de numérotation
+
+# Data - Donnée
+CompetitorPrice = Prix concurrent
+CompetitorPriceHT = Prix concurrent HT
+CompetitorPriceTTC = Prix concurrent TTC
+CompetitorPrices = Prix concurrents
+AddCompetitorPrice = Ajouter un prix concurrent
+CompetitorDate = Date de relève du prix concurrent
+Competitor = Concurrent
+URLCompetitor = URL page produit
+ConfirmDeleteProductCompetitorPrice = Confirmer la suppression du prix concurrent
+DeleteProductCompetitorPrice = Suppression du prix concurrent

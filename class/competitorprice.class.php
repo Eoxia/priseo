@@ -102,22 +102,22 @@ class CompetitorPrice extends CommonObject
 	 * @var array  Array with all fields and their property. Do not use it as a static var. It may be modified by constructor.
 	 */
 	public $fields = array(
-		'rowid'           => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
-	    'ref'             => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'validate'=>'1', 'comment'=>"Reference of object"),
-        'entity'          => array('type'=> 'integer', 'label' => 'Entity', 'enabled' => '1', 'position' => 30, 'notnull' => 1, 'visible' => -1,),
-		'date_creation'   => array('type'=>'datetime', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>5,),
-		'tms'             => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>5,),
-        'status'          => array('type'=>'integer', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'default'=>'1', 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'), 'validate'=>'1',),
-		'label'           => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>0, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"Help text", 'showoncombobox'=>'2', 'validate'=>'1',),
-		'amount_ht'       => array('type'=>'price', 'label'=>'CompetitorPriceHT', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount", 'validate'=>'1',),
-		'amount_ttc'      => array('type'=>'price', 'label'=>'CompetitorPriceTTC', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount", 'validate'=>'1',),
-		'vat'             => array('type'=>'varchar(10)', 'label'=>'VAT', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount", 'validate'=>'1',),
-		'url_competitor'  => array('type'=>'url', 'label'=>'URLCompetitor', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>1, 'cssview'=>'wordbreak', 'validate'=>'1',),
-		'competitor_date' => array('type'=>'datetime', 'label'=>'CompetitorDate', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>1,),
-		'fk_product'      => array('type'=>'integer:Product:product/class/product.class.php:1', 'label'=>'Product', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>0, 'foreignkey'=>'product.rowid', 'help'=>"Product", 'validate'=>'1',),
-		'fk_soc'          => array('type'=>'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'Competitor', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'foreignkey'=>'societe.rowid', 'css'=>'maxwidth500 widthcentpercentminusxx', 'help'=>"LinkToThirparty", 'validate'=>'1',),
-		'fk_user_creat'   => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>'1', 'position'=>510, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid',),
-		'fk_user_modif'   => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
+		'rowid'           => array('type' => 'integer', 'label' => 'TechnicalID', 'enabled' => '1', 'position' => 1, 'notnull' => 1, 'visible' => 0, 'noteditable' => '1', 'index' => 1, 'css' => 'left', 'comment' => "Id"),
+	    'ref'             => array('type' => 'varchar(128)', 'label' => 'Ref', 'enabled'=>'1', 'position' => 20, 'notnull' => 1, 'visible' => 1, 'index' => 1, 'searchall' => 1, 'showoncombobox' => '1', 'validate' => '1', 'comment' => "Reference of object"),
+		'label'           => array('type' => 'varchar(255)', 'label' => 'Label', 'enabled' => '1', 'position' => 70, 'notnull' => 0, 'visible' => 1, 'searchall' => 1, 'css' => 'minwidth200', 'help' => "Help text", 'showoncombobox' => '2'),
+        'entity'          => array('type' => 'integer', 'label' => 'Entity', 'enabled' => '1', 'position' => 30, 'notnull' => 1, 'visible' => 0),
+		'competitor_date' => array('type' => 'datetime', 'label' => 'CompetitorDate', 'enabled' => '1', 'position' => 120, 'notnull' => 1, 'visible' => 1),
+		'fk_soc'          => array('type' => 'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label' => 'Competitor', 'enabled' => '1', 'position' => 140, 'notnull' => 1, 'visible' => 1, 'index' => 1, 'foreignkey ' =>  'societe.rowid', 'css' => 'maxwidth500 widthcentpercentminusxx'),
+		'url_competitor'  => array('type' => 'url', 'label' => 'URLCompetitor', 'enabled' => '1', 'position' => 110, 'notnull' => 0, 'visible' => 1, 'cssview' => 'wordbreak'),
+		'date_creation'   => array('type' => 'datetime', 'label' => 'DateCreation', 'enabled' => '1', 'position' => 40, 'notnull' => 1, 'visible' => 0),
+		'tms'             => array('type' => 'timestamp', 'label' => 'DateModification', 'enabled' => '1', 'position' => 50, 'notnull' => 0, 'visible' => 0),
+        'status'          => array('type' => 'integer', 'label' => 'Status', 'enabled' => '1', 'position' => 60, 'notnull' => 1, 'visible' => 0, 'default' => '1', 'index' => 1, 'arrayofkeyval' => array('0' => 'Brouillon', '1' => 'Valid&eacute;', '9' => 'Annul&eacute;')),
+		'vat'             => array('type' => 'varchar(10)', 'label' => 'VAT', 'enabled' => '1', 'position' => 100, 'notnull' => 0, 'visible' => 0),
+		'amount_ht'       => array('type' => 'price', 'label' => 'CompetitorPriceHT', 'enabled' => '1', 'position' => 80, 'notnull' => 0, 'visible' => 1, 'default' => 'null', 'isameasure' => '1', 'help' => "Help text for amount", 'validate' => '1',),
+		'amount_ttc'      => array('type' => 'price', 'label' => 'CompetitorPriceTTC', 'enabled' => '1', 'position' => 90, 'notnull' => 0, 'visible' => 1, 'default' => 'null', 'isameasure' => '1', 'help' => "Help text for amount", 'validate' => '1',),
+		'fk_product'      => array('type' => 'integer:Product:product/class/product.class.php:1', 'label' => 'Product', 'enabled' => '1', 'position' => 130, 'notnull' => 1, 'visible' => 0, 'index' => 1, 'foreignkey' => 'product.rowid'),
+		'fk_user_creat'   => array('type' => 'integer:User:user/class/user.class.php', 'label' => 'UserAuthor', 'enabled' => '1', 'position' => 150, 'notnull' => 1, 'visible' => 0, 'index' => 1, 'foreignkey' => 'user.rowid'),
+		'fk_user_modif'   => array('type' => 'integer:User:user/class/user.class.php', 'label' => 'UserModif', 'enabled' => '1', 'position' => 160, 'notnull' => -1, 'visible' => 0),
 	);
 
 	public $rowid;

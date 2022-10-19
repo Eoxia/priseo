@@ -52,13 +52,13 @@ class modPriseo extends DolibarrModules
 
 		// Family can be 'base' (core modules),'crm','financial','hr','projects','products','ecm','technic' (transverse modules),'interface' (link with external tools),'other','...'
 		// It is used to group modules by family in module setup page
-		$this->family = "other";
+		$this->family = "";
 
 		// Module position in the family on 2 digits ('01', '10', '20', ...)
-		$this->module_position = '90';
+		$this->module_position = '';
 
 		// Gives the possibility for the module, to provide his own family info and position of this family (Overwrite $this->family and $this->module_position. Avoid this)
-		//$this->familyinfo = array('myownfamily' => array('position' => '01', 'label' => $langs->trans("MyOwnFamily")));
+		$this->familyinfo = array('Eoxia' => array('position' => '01', 'label' => $langs->trans("Eoxia")));
 		// Module label (no space allowed), used if translation string 'ModulePriseoName' not found (Priseo is name of module).
 		$this->name = preg_replace('/^mod/i', '', get_class($this));
 
@@ -68,11 +68,12 @@ class modPriseo extends DolibarrModules
 		$this->descriptionlong = "PriseoDescription";
 
 		// Author
-		$this->editor_name = 'https://';
-		$this->editor_url = 'https://www.example.com';
+		$this->editor_name = 'Eoxia';
+		$this->editor_url = 'https://eoxia.com';
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
-		$this->version = '1.0';
+		$this->version = '1.0.0';
+
 		// Url to the file with your last numberversion of this module
 		//$this->url_last_version = 'http://www.example.com/versionmodule.txt';
 
@@ -83,12 +84,12 @@ class modPriseo extends DolibarrModules
 		// If file is in theme/yourtheme/img directory under name object_pictovalue.png, use this->picto='pictovalue'
 		// If file is in module/img directory under name object_pictovalue.png, use this->picto='pictovalue@module'
 		// To use a supported fa-xxx css style of font awesome, use this->picto='xxx'
-		$this->picto = 'generic';
+		$this->picto = 'priseo256px@priseo';
 
 		// Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
 		$this->module_parts = array(
 			// Set this to 1 if module has its own trigger directory (core/triggers)
-			'triggers' => 0,
+			'triggers' => 1,
 			// Set this to 1 if module has its own login method file (core/login)
 			'login' => 0,
 			// Set this to 1 if module has its own substitution function file (core/substitutions)
@@ -136,7 +137,7 @@ class modPriseo extends DolibarrModules
 		// A condition to hide module
 		$this->hidden = false;
 		// List of module class names as string that must be enabled if this module is enabled. Example: array('always1'=>'modModuleToEnable1','always2'=>'modModuleToEnable2', 'FR1'=>'modModuleToEnableFR'...)
-		$this->depends = array();
+		$this->depends = array('modProduct');
 		$this->requiredby = array(); // List of module class names as string to disable if this one is disabled. Example: array('modModuleToDisable1', ...)
 		$this->conflictwith = array(); // List of module class names as string this module is in conflict with. Example: array('modModuleToDisable1', ...)
 
@@ -268,21 +269,40 @@ class modPriseo extends DolibarrModules
 		$r = 0;
 		// Add here entries to declare new permissions
 		/* BEGIN MODULEBUILDER PERMISSIONS */
+
+        /* PRISEO PERMISSIONS */
+        $this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1);
+        $this->rights[$r][1] = $langs->trans('LirePriseo');
+        $this->rights[$r][4] = 'lire';
+        $r++;
+        $this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1);
+        $this->rights[$r][1] = $langs->trans('ReadPriseo');
+        $this->rights[$r][4] = 'read';
+        $r++;
+
+        /* COMPETITOR PRICE PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Read objects of Priseo'; // Permission label
+		$this->rights[$r][1] = $langs->trans('ReadCompetitorPrice'); // Permission label
 		$this->rights[$r][4] = 'competitorprice';
 		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->priseo->competitorprice->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Create/Update objects of Priseo'; // Permission label
+		$this->rights[$r][1] = $langs->trans('CreateCompetitorPrice'); // Permission label
 		$this->rights[$r][4] = 'competitorprice';
 		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->priseo->competitorprice->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Delete objects of Priseo'; // Permission label
+		$this->rights[$r][1] = $langs->trans('DeleteCompetitorPrice'); // Permission label
 		$this->rights[$r][4] = 'competitorprice';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->priseo->competitorprice->delete)
 		$r++;
+
+        /* ADMINPAGE PANEL ACCESS PERMISSIONS */
+        $this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1);
+        $this->rights[$r][1] = $langs->transnoentities('ReadAdminPage');
+        $this->rights[$r][4] = 'adminpage';
+        $this->rights[$r][5] = 'read';
+
 		/* END MODULEBUILDER PERMISSIONS */
 
 		// Main menu entries to add

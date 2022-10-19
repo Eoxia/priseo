@@ -1,5 +1,6 @@
 <?php
 /* Copyright (C) 2022 Florian HENRY <floria.henry@scopen.fr>
+ * Copyright (C) 2022 EOXIA <dev@eoxia.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +17,7 @@
  */
 
 /**
- * \file    lib/priseo_competitorprice.lib.php
+ * \file    priseo_competitorprice.lib.php
  * \ingroup priseo
  * \brief   Library files with common functions for CompetitorPrice
  */
@@ -29,7 +30,7 @@
  */
 function competitorpricePrepareHead($object)
 {
-	global $db, $langs, $conf;
+	global $conf, $langs;
 
 	$langs->load("priseo@priseo");
 
@@ -39,41 +40,6 @@ function competitorpricePrepareHead($object)
 	$head[$h][0] = dol_buildpath("/priseo/competitorprice_card.php", 1).'?id='.$object->id;
 	$head[$h][1] = $langs->trans("Card");
 	$head[$h][2] = 'card';
-	$h++;
-
-	if (isset($object->fields['note_public']) || isset($object->fields['note_private'])) {
-		$nbNote = 0;
-		if (!empty($object->note_private)) {
-			$nbNote++;
-		}
-		if (!empty($object->note_public)) {
-			$nbNote++;
-		}
-		$head[$h][0] = dol_buildpath('/priseo/competitorprice_note.php', 1).'?id='.$object->id;
-		$head[$h][1] = $langs->trans('Notes');
-		if ($nbNote > 0) {
-			$head[$h][1] .= (empty($conf->global->MAIN_OPTIMIZEFORTEXTBROWSER) ? '<span class="badge marginleftonlyshort">'.$nbNote.'</span>' : '');
-		}
-		$head[$h][2] = 'note';
-		$h++;
-	}
-
-	require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
-	require_once DOL_DOCUMENT_ROOT.'/core/class/link.class.php';
-	$upload_dir = $conf->priseo->dir_output."/competitorprice/".dol_sanitizeFileName($object->ref);
-	$nbFiles = count(dol_dir_list($upload_dir, 'files', 0, '', '(\.meta|_preview.*\.png)$'));
-	$nbLinks = Link::count($db, $object->element, $object->id);
-	$head[$h][0] = dol_buildpath("/priseo/competitorprice_document.php", 1).'?id='.$object->id;
-	$head[$h][1] = $langs->trans('Documents');
-	if (($nbFiles + $nbLinks) > 0) {
-		$head[$h][1] .= '<span class="badge marginleftonlyshort">'.($nbFiles + $nbLinks).'</span>';
-	}
-	$head[$h][2] = 'document';
-	$h++;
-
-	$head[$h][0] = dol_buildpath("/priseo/competitorprice_agenda.php", 1).'?id='.$object->id;
-	$head[$h][1] = $langs->trans("Events");
-	$head[$h][2] = 'agenda';
 	$h++;
 
 	// Show more tabs from modules

@@ -1,5 +1,6 @@
 <?php
 /* Copyright (C) 2022 Florian HENRY <floria.henry@scopen.fr>
+ * Copyright (C) 2022 EOXIA <dev@eoxia.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +17,7 @@
  */
 
 /**
- * \file    priseo/lib/priseo.lib.php
+ * \file    lib/priseo.lib.php
  * \ingroup priseo
  * \brief   Library files with common functions for Priseo
  */
@@ -28,7 +29,7 @@
  */
 function priseoAdminPrepareHead()
 {
-	global $langs, $conf;
+	global $conf, $langs;
 
 	$langs->load("priseo@priseo");
 
