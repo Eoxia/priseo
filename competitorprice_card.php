@@ -113,7 +113,7 @@ $offset = $limit * $page;
 $pageprev = $page - 1;
 $pagenext = $page + 1;
 if (!$sortfield) {
-	$sortfield = "s.nom";
+	$sortfield = "t.fk_soc";
 }
 if (!$sortorder) {
 	$sortorder = "ASC";
@@ -464,7 +464,7 @@ if ($object->id > 0) {
 		$param .= '&ref=' . urlencode($object->ref);
 
 
-		$comptetitorPrices = $competitorPrice->fetchAll('', '', $limit, $page, array('t.fk_product' => $object->id));
+		$comptetitorPrices = $competitorPrice->fetchAll($sortorder, $sortfield, $limit, $page, array('t.fk_product' => $object->id));
 		if (!is_array($comptetitorPrices) && $comptetitorPrices < 0) {
 			setEventMessages($competitorPrice->errors, $competitorPrice->error, 'errors');
 			$comptetitorPrices = array();
