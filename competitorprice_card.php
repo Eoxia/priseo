@@ -566,9 +566,9 @@ if ($object->id > 0) {
 				print '<td class="center nowraponall">';
 
 				if ($permissiontoadd) {
-					print '<a class="editfielda" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&amp;socid=' . $competitorPriceDetail->fk_soc . '&amp;action=update_competitor_price&amp;rowid=' . $competitorPriceDetail->id . '">' . img_edit() . "</a>";
+					print '<a class="editfielda" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&amp;socid=' . $competitorPriceDetail->fk_soc . '&amp;action=update_competitor_price&amp;rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_edit() . "</a>";
 					print ' &nbsp; ';
-					print '<a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&amp;socid=' . $competitorPriceDetail->fk_soc . '&amp;action=ask_remove_cp&amp;rowid=' . $competitorPriceDetail->id . '">' . img_picto($langs->trans("Remove"), 'delete') . '</a>';
+					print '<a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&amp;socid=' . $competitorPriceDetail->fk_soc . '&amp;action=ask_remove_cp&amp;rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_picto($langs->trans("Remove"), 'delete') . '</a>';
 				}
 
 				print '</td>';
