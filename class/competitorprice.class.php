@@ -103,7 +103,7 @@ class CompetitorPrice extends CommonObject
 	 */
 	public $fields = array(
 		'rowid'           => array('type' => 'integer', 'label' => 'TechnicalID', 'enabled' => '1', 'position' => 1, 'notnull' => 1, 'visible' => 0, 'noteditable' => '1', 'index' => 1, 'css' => 'left', 'comment' => "Id"),
-	    'ref'             => array('type' => 'varchar(128)', 'label' => 'Ref', 'enabled'=>'1', 'position' => 20, 'notnull' => 1, 'visible' => 1, 'index' => 1, 'searchall' => 1, 'showoncombobox' => '1', 'validate' => '1', 'comment' => "Reference of object"),
+	    'ref'             => array('type' => 'varchar(128)', 'label' => 'Ref', 'enabled'=>'1', 'position' => 20, 'notnull' => 1, 'visible' => 4, 'noteditable'=>'1', 'index' => 1, 'searchall' => 1, 'showoncombobox' => '1', 'comment' => "Reference of object"),
 		'label'           => array('type' => 'varchar(255)', 'label' => 'Label', 'enabled' => '1', 'position' => 70, 'notnull' => 0, 'visible' => 1, 'searchall' => 1, 'css' => 'minwidth200', 'help' => "Help text", 'showoncombobox' => '2'),
         'entity'          => array('type' => 'integer', 'label' => 'Entity', 'enabled' => '1', 'position' => 30, 'notnull' => 1, 'visible' => 0),
 		'competitor_date' => array('type' => 'datetime', 'label' => 'CompetitorDate', 'enabled' => '1', 'position' => 120, 'notnull' => 1, 'visible' => 1),

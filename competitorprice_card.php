@@ -83,8 +83,10 @@ require_once DOL_DOCUMENT_ROOT . '/core/lib/product.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formprojet.class.php';
+
 dol_include_once('/priseo/class/competitorprice.class.php');
 dol_include_once('/priseo/lib/priseo_competitorprice.lib.php');
+require_once __DIR__ . '/core/modules/priseo/competitorprice/mod_competitorprice_standard.php';
 
 // Load translation files required by the page
 $langs->loadLangs(array("priseo@priseo", "other"));
@@ -124,6 +126,7 @@ if (!$sortorder) {
 $competitorPrice = new CompetitorPrice($db);
 $object = new Product($db);
 $extrafields = new ExtraFields($db);
+$refCompetitorPriceMod = new $conf->global->PRISEO_COMPETITORPRICE_ADDON($db);
 $diroutputmassaction = $conf->priseo->dir_output . '/temp/massgeneration/' . $user->id;
 $hookmanager->initHooks(array('competitorpricecard', 'globalcard')); // Note that conf->hooks_modules contains array
 
@@ -234,6 +237,12 @@ if (empty($reshook)) {
 	$object->fk_product = $product->id;
 	}
 	// Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
+
+    // Action to add record
+    if ($action == 'add' && $permissiontoadd) {
+        $object->ref = $refCompetitorPriceMod->getNextValue($object);
+    }
+
 	include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
 
 	// Actions when linking object each other

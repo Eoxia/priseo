@@ -101,7 +101,7 @@ class modPriseo extends DolibarrModules
 			// Set this to 1 if module has its own barcode directory (core/modules/barcode)
 			'barcode' => 0,
 			// Set this to 1 if module has its own models directory (core/modules/xxx)
-			'models' => 0,
+			'models' => 1,
 			// Set this to 1 if module has its own printing directory (core/modules/printing)
 			'printing' => 0,
 			// Set this to 1 if module has its own theme directory (theme)
@@ -159,7 +159,10 @@ class modPriseo extends DolibarrModules
 		// Example: $this->const=array(1 => array('PRISEO_MYNEWCONST1', 'chaine', 'myvalue', 'This is a constant to add', 1),
 		//                             2 => array('PRISEO_MYNEWCONST2', 'chaine', 'myvalue', 'This is another constant to add', 0, 'current', 1)
 		// );
-		$this->const = array();
+		$this->const = array(
+            // CONST COMPETITOR PRICE
+            1 => array('PRISEO_COMPETITORPRICE_ADDON', 'chaine', 'mod_competitorprice_standard', '', 0, 'current'),
+        );
 
 		// Some keys to add into the overwriting translation tables
 		/*$this->overwrite_translation = array(
