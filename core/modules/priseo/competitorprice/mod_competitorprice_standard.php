@@ -1,5 +1,6 @@
 <?php
-/* Copyright (C) 2022 EOXIA <dev@eoxia.com>
+/* Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
+ * Copyright (C) 2022-2023 EOXIA         <dev@eoxia.fr>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,14 +57,14 @@ class mod_competitorprice_standard
     public function info(): string
     {
         global $langs;
-        $langs->load("priseo@priseo");
-        return $langs->trans("PriseoCompetitorPriceStandardModel", $this->prefix);
+        $langs->load('priseo@priseo');
+        return $langs->trans('PriseoCompetitorPriceStandardModel', $this->prefix);
     }
 
     /**
      *	Return if a module can be used or not
      *
-     *	@return boolean true if module can be used
+     *	@return bool true if module can be used
      */
     public function isEnabled(): bool
     {
@@ -77,7 +78,7 @@ class mod_competitorprice_standard
      */
     public function getExample(): string
     {
-        return $this->prefix."0501-0001";
+        return $this->prefix. '0501-0001';
     }
 
     /**
@@ -85,7 +86,7 @@ class mod_competitorprice_standard
      *  cause conflicts that would prevent this numbering working.
      *
      *  @param  Object  $object	Object we need next value for
-     *  @return boolean     	false if are conflict, true if ok
+     *  @return bool        false if are conflict, true if ok
      */
     public function canBeActivated($object): bool
     {
@@ -94,11 +95,11 @@ class mod_competitorprice_standard
         $coyymm = ''; $max = '';
 
         $posindice = strlen($this->prefix) + 6;
-        $sql = "SELECT MAX(CAST(SUBSTRING(ref FROM ".$posindice.") AS SIGNED)) as max";
-        $sql .= " FROM ".MAIN_DB_PREFIX."priseo_competitorprice";
+        $sql = 'SELECT MAX(CAST(SUBSTRING(ref FROM ' .$posindice. ') AS SIGNED)) as max';
+        $sql .= ' FROM ' .MAIN_DB_PREFIX. 'priseo_competitorprice';
         $sql .= " WHERE ref LIKE '".$db->escape($this->prefix)."____-%'";
         if ($object->ismultientitymanaged == 1) {
-            $sql .= " AND entity = ".$conf->entity;
+            $sql .= ' AND entity = ' .$conf->entity;
         } elseif ($object->ismultientitymanaged == 2) {
             // TODO
         }
@@ -111,7 +112,7 @@ class mod_competitorprice_standard
             }
         }
         if ($coyymm && !preg_match('/'.$this->prefix.'[0-9][0-9][0-9][0-9]/i', $coyymm)) {
-            $langs->load("errors");
+            $langs->load('errors');
             $this->error = $langs->trans('ErrorNumRefModel', $max);
             return false;
         }
@@ -132,11 +133,11 @@ class mod_competitorprice_standard
 
         // first we get the max value
         $posindice = strlen($this->prefix) + 6;
-        $sql = "SELECT MAX(CAST(SUBSTRING(ref FROM ".$posindice.") AS SIGNED)) as max";
-        $sql .= " FROM ".MAIN_DB_PREFIX."priseo_competitorprice";
+        $sql = 'SELECT MAX(CAST(SUBSTRING(ref FROM ' .$posindice. ') AS SIGNED)) as max';
+        $sql .= ' FROM ' .MAIN_DB_PREFIX. 'priseo_competitorprice';
         $sql .= " WHERE ref LIKE '".$db->escape($this->prefix)."____-%'";
         if ($object->ismultientitymanaged == 1) {
-            $sql .= " AND entity = ".$conf->entity;
+            $sql .= ' AND entity = ' .$conf->entity;
         } elseif ($object->ismultientitymanaged == 2) {
             // TODO
         }
@@ -150,22 +151,22 @@ class mod_competitorprice_standard
                 $max = 0;
             }
         } else {
-            dol_syslog("mod_competitorprice_standard::getNextValue", LOG_DEBUG);
+            dol_syslog('mod_competitorprice_standard::getNextValue', LOG_DEBUG);
             return -1;
         }
 
         //$date=time();
         $date = !empty($object->date_creation) ? $object->date_creation : dol_now();
-        $yymm = strftime("%y%m", $date);
+        $yymm = strftime('%y%m', $date);
 
         if ($max >= (pow(10, 4) - 1)) {
             $num = $max + 1; // If counter > 9999, we do not format on 4 chars, we take number as it is
         } else {
-            $num = sprintf("%04s", $max + 1);
+            $num = sprintf('%04s', $max + 1);
         }
 
-        dol_syslog("mod_competitorprice_standard::getNextValue return ".$this->prefix.$yymm."-".$num);
-        return $this->prefix.$yymm."-".$num;
+        dol_syslog('mod_competitorprice_standard::getNextValue return ' .$this->prefix.$yymm. '-' .$num);
+        return $this->prefix.$yymm. '-' .$num;
     }
 
     /**
@@ -176,13 +177,13 @@ class mod_competitorprice_standard
     public function getVersion(): string
     {
         global $langs;
-        $langs->load("admin");
+        $langs->load('admin');
 
         if ($this->version == 'development') {
-            return $langs->trans("VersionDevelopment");
+            return $langs->trans('VersionDevelopment');
         }
         if ($this->version == 'experimental') {
-            return $langs->trans("VersionExperimental");
+            return $langs->trans('VersionExperimental');
         }
         if ($this->version == 'dolibarr') {
             return DOL_VERSION;
@@ -190,6 +191,6 @@ class mod_competitorprice_standard
         if ($this->version) {
             return $this->version;
         }
-        return $langs->trans("NotAvailable");
+        return $langs->trans('NotAvailable');
     }
 }

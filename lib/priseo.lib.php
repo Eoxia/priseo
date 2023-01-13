@@ -1,6 +1,6 @@
 <?php
-/* Copyright (C) 2022 Florian HENRY <floria.henry@scopen.fr>
- * Copyright (C) 2022 EOXIA <dev@eoxia.fr>
+/* Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
+ * Copyright (C) 2022-2023 EOXIA         <dev@eoxia.fr>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,38 +29,26 @@
  */
 function priseoAdminPrepareHead()
 {
+    // Global variables definitions
 	global $conf, $langs;
 
-	$langs->load("priseo@priseo");
+    // Load translation files required by the page
+	$langs->load('priseo@priseo');
 
+    // Initialize values
 	$h = 0;
-	$head = array();
+	$head = [];
 
-	$head[$h][0] = dol_buildpath("/priseo/admin/setup.php", 1);
-	$head[$h][1] = $langs->trans("Settings");
+	$head[$h][0] = dol_buildpath('/priseo/admin/setup.php', 1);
+	$head[$h][1] = '<i class="fas fa-cog pictofixedwidth"></i>' . $langs->trans('Settings');
 	$head[$h][2] = 'settings';
 	$h++;
 
-	/*
-	$head[$h][0] = dol_buildpath("/priseo/admin/myobject_extrafields.php", 1);
-	$head[$h][1] = $langs->trans("ExtraFields");
-	$head[$h][2] = 'myobject_extrafields';
-	$h++;
-	*/
-
-	$head[$h][0] = dol_buildpath("/priseo/admin/about.php", 1);
-	$head[$h][1] = $langs->trans("About");
+	$head[$h][0] = dol_buildpath('/priseo/admin/about.php', 1);
+	$head[$h][1] = '<i class="fab fa-readme pictofixedwidth"></i>' . $langs->trans('About');
 	$head[$h][2] = 'about';
 	$h++;
 
-	// Show more tabs from modules
-	// Entries must be declared in modules descriptor with line
-	//$this->tabs = array(
-	//	'entity:+tabname:Title:@priseo:/priseo/mypage.php?id=__ID__'
-	//); // to add new tab
-	//$this->tabs = array(
-	//	'entity:-tabname:Title:@priseo:/priseo/mypage.php?id=__ID__'
-	//); // to remove a tab
 	complete_head_from_modules($conf, $langs, null, $head, $h, 'priseo@priseo');
 
 	complete_head_from_modules($conf, $langs, null, $head, $h, 'priseo@priseo', 'remove');

@@ -1,4 +1,5 @@
-# Copyright (C) 2022 Florian HENRY <floria.henry@scopen.fr>
+# Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
+# Copyright (C) 2022-2023 EOXIA         <dev@eoxia.fr>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,52 +15,48 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #
-# Generic
+# Générique
 #
 
 # Module label 'ModulePriseoName'
 ModulePriseoName = Priseo
 # Module description 'ModulePriseoDesc'
-ModulePriseoDesc = Priseo description
+ModulePriseoDesc = Comparateur de prix concurrent
+PriseoDescription = Comparateur de prix concurrent
+PriseoDescriptionLong = Comparateur de prix concurrent
 
 #
-# Admin page
+# Page d'administration
 #
-PriseoSetup = Priseo setup
-Settings = Settings
-PriseoSetupPage = Priseo setup page
-PRISEO_MYPARAM1 = My param 1
-PRISEO_MYPARAM1Tooltip = My param 1 tooltip
-PRISEO_MYPARAM2=My param 2
-PRISEO_MYPARAM2Tooltip=My param 2 tooltip
 
+Settings = Réglages
+PriseoSetup = Configuration du module Priseo
+PriseoSetupPage = Page de configuration du module Priseo
 
 #
-# About page
+# Page À propos
 #
-About = About
-PriseoAbout = About Priseo
-PriseoAboutPage = Priseo about page
+
+About = À propos
+PriseoAbout = À propos de Priseo
 
 #
-# Sample page
+# Priseo
 #
-MyPageName = My page name
 
-#
-# Sample widget
-#
-MyWidget = My widget
-MyWidgetDescription = My widget description
-
-
+# Right - Droit
+LirePriseo = Consulter Priseo
+ReadPriseo = Consulter Priseo (read)
+ReadAdminPage = Accéder à la configuration du module
 
 #
 # CompetitorPrice - Prix concurrent
 #
 
 # Right - Droit
-
+ReadCompetitorPrice = Consulter les prix concurrents
+CreateCompetitorPrice = Créer/Modifier les prix concurrents
+DeleteCompetitorPrice = Supprimer les prix concurrents
 
 # Trigger - Déclencheur
 
