@@ -1,4 +1,5 @@
-# Copyright (C) 2022 Florian HENRY <floria.henry@scopen.fr>
+# Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
+# Copyright (C) 2022-2023 EOXIA         <dev@eoxia.fr>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,42 +21,51 @@
 # Module label 'ModulePriseoName'
 ModulePriseoName = Priseo
 # Module description 'ModulePriseoDesc'
-ModulePriseoDesc = Priseo description
+ModulePriseoDesc = Competitor price comparison
+PriseoDescription = Competitor price comparison
+PriseoDescriptionLong = Competitor price comparison
 
 #
 # Admin page
 #
+
 PriseoSetup = Priseo setup
 Settings = Settings
 PriseoSetupPage = Priseo setup page
-PRISEO_MYPARAM1 = My param 1
-PRISEO_MYPARAM1Tooltip = My param 1 tooltip
-PRISEO_MYPARAM2=My param 2
-PRISEO_MYPARAM2Tooltip=My param 2 tooltip
-
 
 #
 # About page
 #
+
 About = About
 PriseoAbout = About Priseo
-PriseoAboutPage = Priseo about page
 
 #
-# Sample page
+# Priseo
 #
-MyPageName = My page name
+
+# Right - Droit
+LirePriseo = Lire Priseo
+ReadPriseo = Read Priseo
+ReadAdminPage = Access the module configuration
 
 #
-# Sample widget
+# CompetitorPrice - Prix concurrent
 #
-MyWidget = My widget
-MyWidgetDescription = My widget description
 
+# Right - Droit
+ReadCompetitorPrice = Read competitor prices
+CreateCompetitorPrice = Create/modify competitor prices
+DeleteCompetitorPrice = Delete competitor prices
 
-CompetitorPrice=Prix Concurrents
-CompetitorPrices=Prix Concurrents
-AddCompetitorPrice=Ajouter un prix concurrent
-Competitor=Concurrent
-URLCompetitor=URL page produit
-ConfirmDeleteProductCompetitorPrice=Confirmer la suppression du prix concurrent
+# Data - Donnée
+CompetitorPrice = Competitor price
+CompetitorPriceHT = HT competitor price
+CompetitorPriceTTC = TTC competitor price
+CompetitorPrices = Competitor prices
+AddCompetitorPrice = Add competitor price
+CompetitorDate = Competitor's price collection date
+Competitor = Competitor
+URLCompetitor = URL page produit
+ConfirmDeleteProductCompetitorPrice = Confirming the removal of the competing price
+DeleteProductCompetitorPrice = Removal of the competing price

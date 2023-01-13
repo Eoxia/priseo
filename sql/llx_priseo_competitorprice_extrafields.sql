@@ -1,4 +1,5 @@
--- Copyright (C) 2022 Florian HENRY <floria.henry@scopen.fr>
+-- Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
+-- Copyright (C) 2022-2023 EOXIA         <dev@eoxia.com>
 --
 -- This program is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -13,11 +14,9 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program. If not, see https://www.gnu.org/licenses/.
 
-create table llx_priseo_competitorprice_extrafields
-(
+create table llx_priseo_competitorprice_extrafields(
   rowid                     integer AUTO_INCREMENT PRIMARY KEY,
   tms                       timestamp,
   fk_object                 integer NOT NULL,
   import_key                varchar(14)                          		-- import key
 ) ENGINE=innodb;
-
