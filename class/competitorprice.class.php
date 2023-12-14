@@ -118,7 +118,7 @@ class CompetitorPrice extends CommonObject
         'url_competitor'  => ['type' => 'url', 'label' => 'URLCompetitor', 'enabled' => '1', 'position' => 110, 'notnull' => 0, 'visible' => 1, 'cssview' => 'wordbreak'],
         'competitor_date' => ['type' => 'datetime', 'label' => 'CompetitorDate', 'enabled' => '1', 'position' => 120, 'notnull' => 1, 'visible' => 1],
         'fk_product'      => ['type' => 'integer:Product:product/class/product.class.php:1', 'label' => 'Product', 'enabled' => '1', 'position' => 130, 'notnull' => 1, 'visible' => 0, 'index' => 1, 'foreignkey' => 'product.rowid'],
-        'fk_soc'          => ['type' => 'integer:Societe:societe/class/societe.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label' => 'Competitor', 'enabled' => '1', 'position' => 140, 'notnull' => 1, 'visible' => 1, 'index' => 1, 'foreignkey ' =>  'societe.rowid', 'css' => 'maxwidth500 widthcentpercentminusxx'],
+        'fk_soc'          => ['type' => 'integer:Societe:societe/class/societe.class.php:1:((status:=:1) AND (entity:IN:__SHARED_ENTITIES__))', 'label' => 'Competitor', 'enabled' => '1', 'position' => 140, 'notnull' => 1, 'visible' => 1, 'index' => 1, 'foreignkey ' =>  'societe.rowid', 'css' => 'maxwidth500 widthcentpercentminusxx'],
         'fk_user_creat'   => ['type' => 'integer:User:user/class/user.class.php', 'label' => 'UserAuthor', 'enabled' => '1', 'position' => 150, 'notnull' => 1, 'visible' => 0, 'index' => 1, 'foreignkey' => 'user.rowid'],
         'fk_user_modif'   => ['type' => 'integer:User:user/class/user.class.php', 'label' => 'UserModif', 'enabled' => '1', 'position' => 160, 'notnull' => -1, 'visible' => 0],
     ];
