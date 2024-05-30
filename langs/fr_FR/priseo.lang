@@ -20,24 +20,25 @@
 
 # Module label 'ModulePriseoName'
 ModulePriseoName = Priseo
+
 # Module description 'ModulePriseoDesc'
-ModulePriseoDesc = Comparateur de prix concurrent
-PriseoDescription = Comparateur de prix concurrent
+ModulePriseoDesc      = Comparateur de prix concurrent
+PriseoDescription     = Comparateur de prix concurrent
 PriseoDescriptionLong = Comparateur de prix concurrent
 
 #
 # Page d'administration
 #
 
-Settings = Réglages
-PriseoSetup = Configuration du module Priseo
+Settings        = Réglages
+PriseoSetup     = Configuration du module Priseo
 PriseoSetupPage = Page de configuration du module Priseo
 
 #
 # Page À propos
 #
 
-About = À propos
+About       = À propos
 PriseoAbout = À propos de Priseo
 
 #
@@ -45,8 +46,8 @@ PriseoAbout = À propos de Priseo
 #
 
 # Right - Droit
-LirePriseo = Consulter Priseo
-ReadPriseo = Consulter Priseo (read)
+LirePriseo    = Consulter Priseo
+ReadPriseo    = Consulter Priseo (read)
 ReadAdminPage = Accéder à la configuration du module
 
 #
@@ -54,7 +55,7 @@ ReadAdminPage = Accéder à la configuration du module
 #
 
 # Right - Droit
-ReadCompetitorPrice = Consulter les prix concurrents
+ReadCompetitorPrice   = Consulter les prix concurrents
 CreateCompetitorPrice = Créer/Modifier les prix concurrents
 DeleteCompetitorPrice = Supprimer les prix concurrents
 
@@ -64,13 +65,14 @@ DeleteCompetitorPrice = Supprimer les prix concurrents
 # Mod Numbering - Modèle de numérotation
 
 # Data - Donnée
-CompetitorPrice = Prix concurrent
-CompetitorPriceHT = Prix concurrent HT
-CompetitorPriceTTC = Prix concurrent TTC
-CompetitorPrices = Prix concurrents
-AddCompetitorPrice = Ajouter un prix concurrent
-CompetitorDate = Date de relève du prix concurrent
-Competitor = Concurrent
-URLCompetitor = URL page produit
+CompetitorPrice                     = Prix concurrent
+CompetitorPriceHT                   = Prix concurrent HT
+CompetitorPriceTTC                  = Prix concurrent TTC
+CompetitorPrices                    = Prix concurrents
+AddCompetitorPrice                  = Ajouter un prix concurrent
+CompetitorDate                      = Date de relève du prix concurrent
+Competitor                          = Concurrent
+URLCompetitor                       = URL page produit
 ConfirmDeleteProductCompetitorPrice = Confirmer la suppression du prix concurrent
-DeleteProductCompetitorPrice = Suppression du prix concurrent
+DeleteProductCompetitorPrice        = Suppression du prix concurrent
+NewCompetitorPrice                  = Nouveaux prix concurrent 
