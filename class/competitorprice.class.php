@@ -115,7 +115,7 @@ class CompetitorPrice extends CommonObject
         'amount_ht'       => ['type' => 'price', 'label' => 'CompetitorPriceHT', 'enabled' => '1', 'position' => 80, 'notnull' => 0, 'visible' => 1, 'default' => 'null', 'isameasure' => '1'],
         'amount_ttc'      => ['type' => 'price', 'label' => 'CompetitorPriceTTC', 'enabled' => '1', 'position' => 90, 'notnull' => 0, 'visible' => 1, 'default' => 'null', 'isameasure' => '1'],
         'vat'             => ['type' => 'varchar(10)', 'label' => 'VAT', 'enabled' => '1', 'position' => 100, 'notnull' => 0, 'visible' => 0],
-        'url_competitor'  => ['type' => 'url', 'label' => 'URLCompetitor', 'enabled' => '1', 'position' => 110, 'notnull' => 0, 'visible' => 1, 'cssview' => 'wordbreak'],
+        'url_competitor'  => ['type' => 'url', 'label' => 'ProductPageURL', 'enabled' => '1', 'position' => 110, 'notnull' => 0, 'visible' => 1, 'cssview' => 'wordbreak'],
         'competitor_date' => ['type' => 'datetime', 'label' => 'CompetitorDate', 'enabled' => '1', 'position' => 120, 'notnull' => 1, 'visible' => 1],
         'fk_product'      => ['type' => 'integer:Product:product/class/product.class.php:1', 'label' => 'Product', 'enabled' => '1', 'position' => 130, 'notnull' => 1, 'visible' => 0, 'index' => 1, 'foreignkey' => 'product.rowid'],
         'fk_soc'          => ['type' => 'integer:Societe:societe/class/societe.class.php:1:((status:=:1) AND (entity:IN:__SHARED_ENTITIES__))', 'label' => 'Competitor', 'enabled' => '1', 'position' => 140, 'notnull' => 1, 'visible' => 1, 'index' => 1, 'foreignkey ' =>  'societe.rowid', 'css' => 'maxwidth500 widthcentpercentminusxx'],

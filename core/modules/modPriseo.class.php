@@ -113,11 +113,6 @@ class modPriseo extends DolibarrModules
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => [
                 'productpricecard'
-				//   'data' => array(
-				//       'hookcontext1',
-				//       'hookcontext2',
-				//   ),
-				//   'entity' => '0',
             ],
 			// Set this to 1 if features of module are opened to external users
 			'moduleforexternal' => 0,
@@ -353,11 +348,18 @@ class modPriseo extends DolibarrModules
         if ($result < 0) {
             return -1; // Do not activate module if error 'not allowed' returned when loading module SQL queries (the _load_table run sql with run_sql with the error allowed parameter set to 'default')
         }
-
         // Permissions
         $this->remove($options);
 
-		return $this->_init($sql, $options);
+        // Create extrafields during init
+        require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
+
+        $extraFields = new ExtraFields($this->db);
+
+        $extraFields->update('product_url', 'ProductPageURL', 'url', '', 'product_fournisseur_price', 0, 0, $this->numero . 10, '', '', '', 1, '', '', '', 0, 'priseo@priseo', "isModEnabled('priseo') && isModEnabled('product')");
+        $extraFields->addExtraField('product_url', 'ProductPageURL', 'url', $this->numero . 10, '', 'product_fournisseur_price', 0, 0, '', '', '', '', 1, '', '', 0, 'priseo@priseo', "isModEnabled('priseo') && isModEnabled('product')");
+
+        return $this->_init($sql, $options);
 	}
 
 	/**
