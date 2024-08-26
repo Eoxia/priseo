@@ -419,7 +419,7 @@ if ($object->id > 0) {
 		print '<div class="div-table-responsive">';
 		print '<table class="liste centpercent">';
 
-		$param = '&id=' . $object->id;
+        $param = '&id=' . $object->id;
 
 		print '<tr class="liste_titre">';
 		foreach ($competitorPrice->fields as $key => $val) {
@@ -438,8 +438,8 @@ if ($object->id > 0) {
 				print getTitleFieldOfList($arrayfields[$key]['label'], 0, $_SERVER['PHP_SELF'], 't.' . $key, '', $param, ($cssforfield ? 'class="' . $cssforfield . '"' : ''), $sortfield, $sortorder, ($cssforfield ? $cssforfield . ' ' : '')) . "\n";
 			}
 		}
-		print getTitleFieldOfList('', 0, $_SERVER['PHP_SELF'], '', '', $param, ($cssforfield ? 'class="' . $cssforfield . '"' : ''), $sortfield, $sortorder, ($cssforfield ? $cssforfield . ' ' : '')) . "\n";
-		print '</tr>';
+        print getTitleFieldOfList($selectedfields, 0, $_SERVER['PHP_SELF'], '', '', $param, ($cssforfield ? 'class="' . $cssforfield . '"' : ''), $sortfield, $sortorder, ($cssforfield ? $cssforfield . ' ' : '')) . "\n";
+        print '</tr>';
 
 		if (!empty($comptetitorPrices)) {
 			foreach ($comptetitorPrices as $competitorPriceDetail) {
