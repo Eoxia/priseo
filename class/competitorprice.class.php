@@ -192,13 +192,14 @@ class CompetitorPrice extends CommonObject
     /**
      * Load object in memory from the database
      *
-     * @param  int         $id  ID object
-     * @param  string|null $ref Ref
-     * @return int              0 < if KO, 0 if not found, >0 if OK
+     * @param  int|string  $id        ID object
+     * @param  string|null $ref       Ref
+     * @param  string      $morewhere More SQL filters (' AND ...')
+     * @return int                    0 < if KO, 0 if not found, > 0 if OK
      */
-    public function fetch($id, string $ref = null): int
+    public function fetch($id, string $ref = null, string $morewhere = ''): int
     {
-        return $this->fetchCommon($id, $ref);
+        return $this->fetchCommon($id, $ref, $morewhere);
     }
 
 
