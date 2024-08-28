@@ -104,9 +104,36 @@ class ActionsPriseo
                 </script>
                 <?php
             }
-
         }
+        return 0; // or return 1 to replace standard code
+    }
 
+    /**
+     * Overloading the completeTabsHead function : replacing the parent's function with the one below
+     *
+     * @param  array $parameters Hook metadatas (context, etc...)
+     * @return int               0 < on error, 0 on success, 1 to replace standard code
+     */
+    public function completeTabsHead(array $parameters): int
+    {
+        global $db;
+
+        require_once __DIR__ . '/competitorprice.class.php';
+
+        if (strpos($parameters['context'], 'main') !== false) {
+            $competitorPrice  = new CompetitorPrice($db);
+            $competitorPrices = $competitorPrice->fetchAll('', '', 0, 0, ['customsql' => 't.status >= 0']);
+                if (!empty($parameters['head'])) {
+                    foreach ($parameters['head'] as $headKey => $tabsHead) {
+                        if (is_array($tabsHead) && !empty($tabsHead)) {
+                            if (isset($tabsHead[2]) && $tabsHead[2] === 'priseo' && !strpos($parameters['head'][$headKey][1], 'badge')) {
+                                $parameters['head'][$headKey][1] .= '<span class="badge marginleftonlyshort">' . (count($competitorPrices) > 0 ? count($competitorPrices) : 0) . '</span>';
+                            }
+                        }
+                    }
+                }
+            $this->results = $parameters;
+        }
         return 0; // or return 1 to replace standard code
     }
 }
