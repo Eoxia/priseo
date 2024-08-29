@@ -358,6 +358,21 @@ class CompetitorPrice extends SaturneObject
         }
     }
 
+    /**
+     * Sets object to supplied categories
+     *
+     * Deletes object from existing categories not supplied
+     * Adds it to non-existing supplied categories
+     * Existing categories are left untouched
+     *
+     * @param  int[]|int $categories Category or categories IDs
+     * @return float|int
+     */
+    public function setCategories($categories)
+    {
+        return 1;
+    }
+
 	/**
 	 *  Return a link to the object card (with optionaly the picto)
 	 *

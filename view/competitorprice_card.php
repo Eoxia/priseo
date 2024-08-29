@@ -186,6 +186,7 @@ if (empty($reshook)) {
     }
 
     $noback = 1;
+    $object->setCategories('setCategories');
 	require_once DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
 
     if ($action == 'confirm_clone' && $permissiontoadd) {
