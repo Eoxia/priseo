@@ -186,10 +186,10 @@ if (empty($reshook)) {
     }
 
     $noback = 1;
-    $object->setCategories('setCategories');
 	require_once DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
 
     if ($action == 'confirm_clone' && $permissiontoadd) {
+        setEventMessages('', $langs->trans('RecordCreatedSuccessfully'));
         header("Location: " . $_SERVER['PHP_SELF'] . '?id=' . $id); // Open record of new object
         exit;
     }
@@ -465,7 +465,7 @@ if ($object->id > 0) {
 				print '<td class="center nowraponall">';
 				if ($permissiontoadd) {
 					print '<a class="editfielda marginrightonly" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=update_competitor_price&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_edit() . '</a>';
-                    print '<a class="marginrightonly" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=confirm_clone&confirm=yes&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_picto($langs->trans('Clone'), 'clone') . '</a>';
+                    print '<a class="marginrightonly wpeo-loader" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=confirm_clone&confirm=yes&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_picto($langs->trans('Clone'), 'clone') . '</a>';
 					print '<a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=deleteProductCompetitorPrice&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_picto($langs->trans('Remove'), 'delete') . '</a>';
                 }
 				print '</td>';
