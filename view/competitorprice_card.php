@@ -87,10 +87,10 @@ if (!empty($rowid)) {
 
 // Default sort order (if not yet defined by previous GETPOST)
 if (!$sortfield) {
-    $sortfield = 't.fk_soc';
+    $sortfield = 't.competitor_date';
 }
 if (!$sortorder) {
-    $sortorder = 'ASC';
+    $sortorder = 'DESC';
 }
 
 // Definition of array of fields for columns
@@ -185,7 +185,13 @@ if (empty($reshook)) {
         $object->ref = $refCompetitorPriceMod->getNextValue($object);
     }
 
-	include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
+    $noback = 1;
+	require_once DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
+
+    if ($action == 'confirm_clone' && $permissiontoadd) {
+        header("Location: " . $_SERVER['PHP_SELF'] . '?id=' . $id); // Open record of new object
+        exit;
+    }
 
 	//Tricks to use common template
 	$object = $product;
@@ -213,7 +219,7 @@ if ($object->id > 0) {
 
     $formconfirm = '';
     if (($action == 'deleteProductCompetitorPrice' && (empty($conf->use_javascript_ajax) || !empty($conf->dol_use_jmobile)))        // Output when action = clone if jmobile or no js
-        || (!empty($conf->use_javascript_ajax) && empty($conf->dol_use_jmobile))) {                            // Always output when not jmobile nor js
+        || (!empty($conf->use_javascript_ajax) && empty($conf->dol_use_jmobile))) {// Always output when not jmobile nor js
         $formconfirm .= $form->formconfirm($_SERVER['PHP_SELF'] . '?id=' . $object->id . '&rowid=' . $competitorPrice->id, $langs->trans('DeleteProductCompetitorPrice'), $langs->trans('ConfirmDeleteProductCompetitorPrice'), 'confirm_delete', '', 'yes', 1);
     }
 
@@ -457,10 +463,10 @@ if ($object->id > 0) {
 				// Modify-Remove
 				print '<td class="center nowraponall">';
 				if ($permissiontoadd) {
-					print '<a class="editfielda" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=update_competitor_price&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_edit() . '</a>';
-                    print ' ';
+					print '<a class="editfielda marginrightonly" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=update_competitor_price&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_edit() . '</a>';
+                    print '<a class="marginrightonly" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=confirm_clone&confirm=yes&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_picto($langs->trans('Clone'), 'clone') . '</a>';
 					print '<a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=deleteProductCompetitorPrice&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_picto($langs->trans('Remove'), 'delete') . '</a>';
-				}
+                }
 				print '</td>';
 				print '</tr>';
 			}
