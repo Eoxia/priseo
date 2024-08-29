@@ -41,7 +41,13 @@ class modPriseo extends DolibarrModules
 		global $langs, $conf;
 		$this->db = $db;
 
-        $langs->load('priseo@priseo');
+        if (file_exists(__DIR__ . '/../../../saturne/lib/saturne_functions.lib.php')) {
+            require_once __DIR__ . '/../../../saturne/lib/saturne_functions.lib.php';
+            saturne_load_langs(['priseo@priseo']);
+        } else {
+            $this->error++;
+            $this->errors[] = $langs->trans('activateModuleDependNotSatisfied', 'Priseo', 'Saturne');
+        }
 
 		// ID for module (must be unique).
 		// Use here a free id (See in Home -> System information -> Dolibarr for list of used module id).
@@ -72,7 +78,7 @@ class modPriseo extends DolibarrModules
 		$this->editor_url = 'https://eoxia.com';
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
-		$this->version = '1.0.0';
+		$this->version = '1.1.0';
 
 		// Url to the file with your last numberversion of this module
 		//$this->url_last_version = 'http://www.example.com/versionmodule.txt';
@@ -112,11 +118,8 @@ class modPriseo extends DolibarrModules
 			'js' => [],
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => [
-				//   'data' => array(
-				//       'hookcontext1',
-				//       'hookcontext2',
-				//   ),
-				//   'entity' => '0',
+                'main',
+                'productpricecard'
             ],
 			// Set this to 1 if features of module are opened to external users
 			'moduleforexternal' => 0,
@@ -352,11 +355,18 @@ class modPriseo extends DolibarrModules
         if ($result < 0) {
             return -1; // Do not activate module if error 'not allowed' returned when loading module SQL queries (the _load_table run sql with run_sql with the error allowed parameter set to 'default')
         }
-
         // Permissions
         $this->remove($options);
 
-		return $this->_init($sql, $options);
+        // Create extrafields during init
+        require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
+
+        $extraFields = new ExtraFields($this->db);
+
+        $extraFields->update('product_url', 'ProductPageURL', 'url', '', 'product_fournisseur_price', 0, 0, $this->numero . 10, '', '', '', 1, '', '', '', 0, 'priseo@priseo', "isModEnabled('priseo') && isModEnabled('product')");
+        $extraFields->addExtraField('product_url', 'ProductPageURL', 'url', $this->numero . 10, '', 'product_fournisseur_price', 0, 0, '', '', '', '', 1, '', '', 0, 'priseo@priseo', "isModEnabled('priseo') && isModEnabled('product')");
+
+        return $this->_init($sql, $options);
 	}
 
 	/**

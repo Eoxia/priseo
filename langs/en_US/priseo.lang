@@ -20,24 +20,25 @@
 
 # Module label 'ModulePriseoName'
 ModulePriseoName = Priseo
+
 # Module description 'ModulePriseoDesc'
-ModulePriseoDesc = Competitor price comparison
-PriseoDescription = Competitor price comparison
+ModulePriseoDesc      = Competitor price comparison
+PriseoDescription     = Competitor price comparison
 PriseoDescriptionLong = Competitor price comparison
 
 #
 # Admin page
 #
 
-PriseoSetup = Priseo setup
-Settings = Settings
+PriseoSetup     = Priseo setup
+Settings        = Settings
 PriseoSetupPage = Priseo setup page
 
 #
 # About page
 #
 
-About = About
+About       = About
 PriseoAbout = About Priseo
 
 #
@@ -45,8 +46,8 @@ PriseoAbout = About Priseo
 #
 
 # Right - Droit
-LirePriseo = Lire Priseo
-ReadPriseo = Read Priseo
+LirePriseo    = Lire Priseo
+ReadPriseo    = Read Priseo
 ReadAdminPage = Access the module configuration
 
 #
@@ -54,18 +55,20 @@ ReadAdminPage = Access the module configuration
 #
 
 # Right - Droit
-ReadCompetitorPrice = Read competitor prices
+ReadCompetitorPrice   = Read competitor prices
 CreateCompetitorPrice = Create/modify competitor prices
 DeleteCompetitorPrice = Delete competitor prices
 
 # Data - Donnée
-CompetitorPrice = Competitor price
-CompetitorPriceHT = HT competitor price
-CompetitorPriceTTC = TTC competitor price
-CompetitorPrices = Competitor prices
-AddCompetitorPrice = Add competitor price
-CompetitorDate = Competitor's price collection date
-Competitor = Competitor
-URLCompetitor = URL page produit
+CompetitorPrice                     = Competitor price
+CompetitorPriceHT                   = HT competitor price
+CompetitorPriceTTC                  = TTC competitor price
+CompetitorPrices                    = Competitor prices
+AddCompetitorPrice                  = Add competitor price
+CompetitorDate                      = Competitor's price collection date
+Competitor                          = Competitor
+ProductPageURL                      = Product page URL
 ConfirmDeleteProductCompetitorPrice = Confirming the removal of the competing price
-DeleteProductCompetitorPrice = Removal of the competing price
+DeleteProductCompetitorPrice        = Removal of the competing price
+NewCompetitorPrice                  = NewCompetitorPrice
+

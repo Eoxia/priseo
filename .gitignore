@@ -19,3 +19,5 @@
 *.back
 /.editorconfig
 /.gitattributes
+node_modules
+package-lock.json

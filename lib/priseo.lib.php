@@ -33,7 +33,7 @@ function priseoAdminPrepareHead()
 	global $conf, $langs;
 
     // Load translation files required by the page
-	$langs->load('priseo@priseo');
+    saturne_load_langs();
 
     // Initialize values
 	$h = 0;

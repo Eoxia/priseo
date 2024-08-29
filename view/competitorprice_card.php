@@ -22,39 +22,13 @@
  *		\brief      Page to create/edit/view competitorprice
  */
 
-// Load Dolibarr environment
-$res = 0;
-// Try main.inc.php into web root known defined into CONTEXT_DOCUMENT_ROOT (not always defined)
-if (!$res && !empty($_SERVER['CONTEXT_DOCUMENT_ROOT'])) {
-	$res = @include $_SERVER['CONTEXT_DOCUMENT_ROOT'] . '/main.inc.php';
-}
-// Try main.inc.php into web root detected using web root calculated from SCRIPT_FILENAME
-$tmp = empty($_SERVER['SCRIPT_FILENAME']) ? '' : $_SERVER['SCRIPT_FILENAME'];
-$tmp2 = realpath(__FILE__);
-$i = strlen($tmp) - 1;
-$j = strlen($tmp2) - 1;
-while ($i > 0 && $j > 0 && isset($tmp[$i]) && isset($tmp2[$j]) && $tmp[$i] == $tmp2[$j]) {
-	$i--;
-	$j--;
-}
-if (!$res && $i > 0 && file_exists(substr($tmp, 0, ($i + 1)) . '/main.inc.php')) {
-	$res = @include substr($tmp, 0, ($i + 1)) . '/main.inc.php';
-}
-if (!$res && $i > 0 && file_exists(dirname(substr($tmp, 0, ($i + 1))) . '/main.inc.php')) {
-	$res = @include dirname(substr($tmp, 0, ($i + 1))) . '/main.inc.php';
-}
-// Try main.inc.php using relative path
-if (!$res && file_exists('../main.inc.php')) {
-	$res = @include '../main.inc.php';
-}
-if (!$res && file_exists('../../main.inc.php')) {
-	$res = @include '../../main.inc.php';
-}
-if (!$res && file_exists('../../../main.inc.php')) {
-	$res = @include '../../../main.inc.php';
-}
-if (!$res) {
-	die('Include of main fails');
+// Load Priseo environment
+if (file_exists('../priseo.main.inc.php')) {
+    require_once __DIR__ . '/../priseo.main.inc.php';
+} elseif (file_exists('../../priseo.main.inc.php')) {
+    require_once __DIR__ . '/../../priseo.main.inc.php';
+} else {
+    die('Include of priseo main fails');
 }
 
 // Libraries
@@ -113,10 +87,10 @@ if (!empty($rowid)) {
 
 // Default sort order (if not yet defined by previous GETPOST)
 if (!$sortfield) {
-    $sortfield = 't.fk_soc';
+    $sortfield = 't.competitor_date';
 }
 if (!$sortorder) {
-    $sortorder = 'ASC';
+    $sortorder = 'DESC';
 }
 
 // Definition of array of fields for columns
@@ -211,7 +185,14 @@ if (empty($reshook)) {
         $object->ref = $refCompetitorPriceMod->getNextValue($object);
     }
 
-	include DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
+    $noback = 1;
+	require_once DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
+
+    if ($action == 'confirm_clone' && $permissiontoadd) {
+        setEventMessages('', $langs->trans('RecordCreatedSuccessfully'));
+        header("Location: " . $_SERVER['PHP_SELF'] . '?id=' . $id); // Open record of new object
+        exit;
+    }
 
 	//Tricks to use common template
 	$object = $product;
@@ -239,7 +220,7 @@ if ($object->id > 0) {
 
     $formconfirm = '';
     if (($action == 'deleteProductCompetitorPrice' && (empty($conf->use_javascript_ajax) || !empty($conf->dol_use_jmobile)))        // Output when action = clone if jmobile or no js
-        || (!empty($conf->use_javascript_ajax) && empty($conf->dol_use_jmobile))) {                            // Always output when not jmobile nor js
+        || (!empty($conf->use_javascript_ajax) && empty($conf->dol_use_jmobile))) {// Always output when not jmobile nor js
         $formconfirm .= $form->formconfirm($_SERVER['PHP_SELF'] . '?id=' . $object->id . '&rowid=' . $competitorPrice->id, $langs->trans('DeleteProductCompetitorPrice'), $langs->trans('ConfirmDeleteProductCompetitorPrice'), 'confirm_delete', '', 'yes', 1);
     }
 
@@ -419,7 +400,7 @@ if ($object->id > 0) {
 		print '<div class="div-table-responsive">';
 		print '<table class="liste centpercent">';
 
-		$param = '&id=' . $object->id;
+        $param = '&id=' . $object->id;
 
 		print '<tr class="liste_titre">';
 		foreach ($competitorPrice->fields as $key => $val) {
@@ -438,8 +419,8 @@ if ($object->id > 0) {
 				print getTitleFieldOfList($arrayfields[$key]['label'], 0, $_SERVER['PHP_SELF'], 't.' . $key, '', $param, ($cssforfield ? 'class="' . $cssforfield . '"' : ''), $sortfield, $sortorder, ($cssforfield ? $cssforfield . ' ' : '')) . "\n";
 			}
 		}
-		print getTitleFieldOfList('', 0, $_SERVER['PHP_SELF'], '', '', $param, ($cssforfield ? 'class="' . $cssforfield . '"' : ''), $sortfield, $sortorder, ($cssforfield ? $cssforfield . ' ' : '')) . "\n";
-		print '</tr>';
+        print getTitleFieldOfList($selectedfields, 0, $_SERVER['PHP_SELF'], '', '', $param, ($cssforfield ? 'class="' . $cssforfield . '"' : ''), $sortfield, $sortorder, ($cssforfield ? $cssforfield . ' ' : '')) . "\n";
+        print '</tr>';
 
 		if (!empty($comptetitorPrices)) {
 			foreach ($comptetitorPrices as $competitorPriceDetail) {
@@ -483,10 +464,10 @@ if ($object->id > 0) {
 				// Modify-Remove
 				print '<td class="center nowraponall">';
 				if ($permissiontoadd) {
-					print '<a class="editfielda" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=update_competitor_price&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_edit() . '</a>';
-                    print ' ';
+					print '<a class="editfielda marginrightonly" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=update_competitor_price&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_edit() . '</a>';
+                    print '<a class="marginrightonly wpeo-loader" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=confirm_clone&confirm=yes&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_picto($langs->trans('Clone'), 'clone') . '</a>';
 					print '<a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&socid=' . $competitorPriceDetail->fk_soc . '&action=deleteProductCompetitorPrice&rowid=' . $competitorPriceDetail->id . '&token=' .  newToken() . '">' . img_picto($langs->trans('Remove'), 'delete') . '</a>';
-				}
+                }
 				print '</td>';
 				print '</tr>';
 			}
