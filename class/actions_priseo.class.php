@@ -126,8 +126,10 @@ class ActionsPriseo
 							require_once __DIR__ . '/competitorprice.class.php';
 
 							$competitorPrice  = new CompetitorPrice($this->db);
-							$competitorPrices = $competitorPrice->getCountOfItemsLinkedByObjectID($parameters['object']->id, 'status >= 0 AND fk_product', $competitorPrice->table_element);
-							$parameters['head'][$headKey][1] .= '<span class="badge marginleftonlyshort">' . (max($competitorPrices, 0)) . '</span>';
+							$competitorPrices = $competitorPrice->fetchAll('', '', 0, 0, ['customsql' => 't.status >= 0 AND t.fk_product = ' . $parameters['object']->id]);
+							if (is_array($competitorPrices) && !empty($competitorPrices)) {
+                                $parameters['head'][$headKey][1] .= '<span class="badge marginleftonlyshort">' . count($competitorPrices) . '</span>';
+                            }
 						}
 					}
 				}
