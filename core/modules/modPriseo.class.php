@@ -41,7 +41,13 @@ class modPriseo extends DolibarrModules
 		global $langs, $conf;
 		$this->db = $db;
 
-        $langs->load('priseo@priseo');
+        if (file_exists(__DIR__ . '/../../../saturne/lib/saturne_functions.lib.php')) {
+            require_once __DIR__ . '/../../../saturne/lib/saturne_functions.lib.php';
+            saturne_load_langs(['priseo@priseo']);
+        } else {
+            $this->error++;
+            $this->errors[] = $langs->trans('activateModuleDependNotSatisfied', 'Priseo', 'Saturne');
+        }
 
 		// ID for module (must be unique).
 		// Use here a free id (See in Home -> System information -> Dolibarr for list of used module id).
