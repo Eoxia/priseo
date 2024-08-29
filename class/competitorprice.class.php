@@ -24,10 +24,13 @@
 
 require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
 
+//Load saturne libraries
+require_once __DIR__ . '/../../saturne/class/saturneobject.class.php';
+
 /**
  * Class for CompetitorPrice
  */
-class CompetitorPrice extends CommonObject
+class CompetitorPrice extends SaturneObject
 {
 	/**
 	 * @var string ID of module.
@@ -304,6 +307,55 @@ class CompetitorPrice extends CommonObject
     public function delete(User $user, bool $notrigger = false): int
     {
         return $this->deleteCommon($user, $notrigger);
+    }
+
+    /**
+     * Clone an object into another one.
+     *
+     * @param  User      $user    User that creates
+     * @param  int       $fromID  ID of object to clone.
+     * @return int                New object created, <0 if KO.
+     * @throws Exception
+     */
+    public function createFromClone(User $user, int $fromID): int
+    {
+        dol_syslog(__METHOD__, LOG_DEBUG);
+
+        $object = new self($this->db);
+        $this->db->begin();
+
+        // Reset some properties
+        unset($object->id);
+        unset($object->fk_user_creat);
+
+        // Load source object
+        $object->fetchCommon($fromID);
+
+        // Clear fields
+        if (property_exists($object, 'date_creation')) {
+            $object->date_creation = dol_now();
+        }
+        if (property_exists($object, 'competitor_date')) {
+            $object->competitor_date = dol_now();
+        }
+        if (property_exists($object, 'ref')) {
+            $object->ref = $this->getNextNumRef();
+        }
+
+        // Create clone
+        $object->context   = 'createfromclone';
+        $competitorPriceID = $object->create($user);
+
+        unset($object->context);
+
+        // End
+        if ($competitorPriceID > 0) {
+            $this->db->commit();
+            return $competitorPriceID;
+        } else {
+            $this->db->rollback();
+            return -1;
+        }
     }
 
 	/**
