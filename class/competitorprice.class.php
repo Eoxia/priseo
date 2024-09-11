@@ -566,4 +566,63 @@ class CompetitorPrice extends SaturneObject
     {
 		$this->initAsSpecimenCommon();
 	}
+
+    /**
+     * Load dashboard info
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function load_dashboard(): array
+    {
+        $getCompetitorPriceByAmountHT = $this->getCompetitorPriceByAmountHT();
+
+        $array['graphs'] = [$getCompetitorPriceByAmountHT];
+
+        return $array;
+    }
+
+    /**
+     * Get competitor price by amount HT
+     *
+     * @return array     Graph datas (label/color/type/title/data etc..)
+     * @throws Exception
+     */
+    public function getCompetitorPriceByAmountHT(): array
+    {
+        global $langs;
+
+        // Graph Title parameters
+        $array['title'] = $langs->transnoentities('CompetitorPriceEvolutionOverTime');
+        $array['picto'] = $this->picto;
+
+        // Graph parameters
+        $array['width']      = '100%';
+        $array['height']     = 400;
+        $array['type']       = 'lines';
+        $array['showlegend'] = 1;
+        $array['dataset']    = 2;
+
+        $array['labels'] = [
+            0 => [
+                'label' => $langs->transnoentities('AmountHT'),
+            ],
+            1 => [
+                'label' => $langs->transnoentities('Average'),
+            ]
+        ];
+
+        $arrayCompetitorPriceByAmountHT = [];
+        $competitorPrices               = $this->fetchAll('', '', 0, 0, ['customsql' => 't.amount_ht IS NOT NULL AND t.fk_product = ' . GETPOST('id')]);
+        $averageAmountHT                = $this->getAverage(GETPOST('id'));
+        if (is_array($competitorPrices) && !empty($competitorPrices)) {
+            foreach ($competitorPrices as $competitorPrice) {
+                $arrayCompetitorPriceByAmountHT[] = [dol_print_date($competitorPrice->date_creation, 'dayhour', 'tzuser'), $competitorPrice->amount_ht, $averageAmountHT];
+            }
+        }
+
+        $array['data'] = $arrayCompetitorPriceByAmountHT;
+
+        return $array;
+    }
 }

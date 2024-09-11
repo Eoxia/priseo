@@ -75,4 +75,5 @@ Competitor                          = Concurrent
 ProductPageURL                      = URL page produit
 ConfirmDeleteProductCompetitorPrice = Confirmer la suppression du prix concurrent
 DeleteProductCompetitorPrice        = Suppression du prix concurrent
-NewCompetitorPrice                  = Nouveaux prix concurrent 
+NewCompetitorPrice                  = Nouveaux prix concurrent
+CompetitorPriceEvolutionOverTime    = Évolution du prix dans le temps

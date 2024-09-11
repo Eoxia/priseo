@@ -37,6 +37,9 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formprojet.class.php';
 
+// Load Saturne libraries
+require_once __DIR__ . '/../../saturne/class/saturnedashboard.class.php';
+
 require_once __DIR__ . '/../class/competitorprice.class.php';
 require_once __DIR__ . '/../core/modules/priseo/competitorprice/mod_competitorprice_standard.php';
 
@@ -74,6 +77,7 @@ $pagenext = $page + 1;
 $competitorPrice       = new CompetitorPrice($db);
 $object                = new Product($db);
 $extrafields           = new ExtraFields($db);
+$dashboard             = new SaturneDashboard($db, 'priseo');
 $refCompetitorPriceMod = new $conf->global->PRISEO_COMPETITORPRICE_ADDON($db);
 
 $hookmanager->initHooks(['competitorpricecard', 'globalcard']); // Note that conf->hooks_modules contains array
@@ -248,6 +252,8 @@ if ($object->id > 0) {
 	print '<div class="underbanner clearboth"></div>';
 
 	print dol_get_fiche_end();
+
+    $dashboard->show_dashboard();
 
 	// Actions buttons
 	print '<div class="tabsAction">';
