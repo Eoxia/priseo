@@ -204,6 +204,7 @@ if (empty($reshook)) {
  */
 
 // Initialize view objects
+
 $form = new Form($db);
 
 $title    = $langs->trans('CompetitorPrice');
@@ -219,10 +220,20 @@ if ($object->id > 0) {
     print dol_get_fiche_head($head, 'priseo', $titre, -1, $picto);
 
     $formconfirm = '';
-    if (($action == 'deleteProductCompetitorPrice' && (empty($conf->use_javascript_ajax) || !empty($conf->dol_use_jmobile)))        // Output when action = clone if jmobile or no js
-        || (!empty($conf->use_javascript_ajax) && empty($conf->dol_use_jmobile))) {// Always output when not jmobile nor js
-        $formconfirm .= $form->formconfirm($_SERVER['PHP_SELF'] . '?id=' . $object->id . '&rowid=' . $competitorPrice->id, $langs->trans('DeleteProductCompetitorPrice'), $langs->trans('ConfirmDeleteProductCompetitorPrice'), 'confirm_delete', '', 'yes', 1);
+    if ($action == 'deleteProductCompetitorPrice' && $permissiontodelete) { // Always output when not jmobile nor js
+        $formconfirm = $form->formconfirm($_SERVER['PHP_SELF'] . '?id=' . $object->id . '&rowid=' . $competitorPrice->id, $langs->trans('DeleteProductCompetitorPrice'), $langs->trans('ConfirmDeleteProductCompetitorPrice'), 'confirm_delete', 'question', 'yes', 1);
     }
+
+    $parameters = ['formConfirm' => $formconfirm];
+    $reshook = $hookmanager->executeHooks('formConfirm', $parameters, $object, $action); // Note that $action and $object may have been modified by hook
+    if (empty($reshook)) {
+        $formconfirm .= $hookmanager->resPrint;
+    } elseif ($reshook > 0) {
+        $formconfirm = $hookmanager->resPrint;
+    }
+
+    // Print form confirm
+    print $formconfirm;
 
     $linkback = '<a href="' . DOL_URL_ROOT . '/product/list.php?restore_lastsearch_values=1">' . $langs->trans('BackToList') . '</a>';
 	$object->next_prev_filter = ' fk_product_type = ' . $object->type;
