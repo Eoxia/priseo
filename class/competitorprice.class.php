@@ -560,10 +560,10 @@ class CompetitorPrice extends SaturneObject
     /**
      * Return average of amount_ht
      *
-     * @param  int   $fkProductID ID of product
-     * @return float $average     Average of amount_ht
+     * @param  int        $fkProductID ID of product
+     * @return float|null $average     Average of amount_ht
      */
-    public function getAverage(int $fkProductID = 0): float
+    public function getAverage(int $fkProductID = 0): ?float
     {
         $sql  = 'SELECT AVG(amount_ht) AS moyenne_amount_ht';
         $sql .= ' FROM ' . MAIN_DB_PREFIX . $this->table_element . ' as t';
