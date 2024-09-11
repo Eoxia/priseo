@@ -79,21 +79,19 @@ class ActionsPriseo
         global $object;
 
         if (strpos($parameters['context'], 'productpricecard') !== false) {
-            require_once __DIR__ . './competitorprice.class.php';
+            require_once __DIR__ . '/competitorprice.class.php';
 
             $competitorPrice = new CompetitorPrice($this->db);
 
-            $competitorPrices     = $competitorPrice->fetchAll('DESC', 'amount_ht', 0, 0, ['customsql' => 't.status >= ' . $competitorPrice::STATUS_DRAFT . ' AND t.fk_product = ' . $object->id]);
-            $lastCompetitorPrices = $competitorPrice->fetch('', '', ' ORDER BY t.rowid DESC');
+            $competitorPrices = $competitorPrice->fetchAll('DESC', 'amount_ht', 0, 0, ['customsql' => 't.status = ' . $competitorPrice::STATUS_VALIDATED . ' AND t.fk_product = ' . $object->id]);
             if (is_array($competitorPrices) && !empty($competitorPrices)) {
-                $lastCompetitorPrice = array_shift($lastCompetitorPrices);
-                $maxPrices           = array_shift($competitorPrices);
-                $minPrices           = end($competitorPrices);
-                $pictopath           = dol_buildpath('custom/priseo/img/priseo_color.png', 1);
-                $pictoPriseo         = img_picto('', $pictopath, '', 1, 0, 0, '', 'pictoPriseo');
+                $maxPrices = array_shift($competitorPrices);
+                $minPrices = end($competitorPrices);
+
+                $competitorPrice->fetch('', '', ' ORDER BY t.rowid DESC');
 
                 $out  = '<tr><td>';
-                $out .= ucfirst($this->module) . ' (' . dol_print_date($lastCompetitorPrice->date_creation, 'day') . ')</td><td>' . $pictoPriseo . ' ';
+                $out .= img_picto('', $competitorPrice->picto . '_1.2em', 'class="pictoPriseo"') . ucfirst($this->module) . ' (' . dol_print_date($competitorPrice->date_creation, 'day') . ') - ' . price($competitorPrice->getAverage($object->id), 0, '', 1, -1, -1, 'auto') . ' HT</td><td>';
                 $out .= $object->price < $minPrices->amount_ht ? price($object->price, 0, '', 1, -1, -1, 'auto') . ' HT': price($minPrices->amount_ht, 0, '', 1, -1, -1, 'auto') . ' HT';
                 $out .= ' <= ' . price($object->price, 0, '', 1, -1, -1, 'auto') . ' HT <= ';
                 $out .= $maxPrices->amount_ht < $object->price ? price($object->price, 0, '', 1, -1, -1, 'auto') . ' HT': price($maxPrices->amount_ht, 0, '', 1, -1, -1, 'auto') . ' HT';
