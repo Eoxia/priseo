@@ -77,3 +77,4 @@ ConfirmDeleteProductCompetitorPrice = Confirmer la suppression du prix concurren
 DeleteProductCompetitorPrice        = Suppression du prix concurrent
 NewCompetitorPrice                  = Nouveaux prix concurrent
 ModifyCompetitorPrice               = Modifier le prix concurrent
+CompetitorPriceEvolutionOverTime    = Évolution du prix dans le temps
