@@ -70,5 +70,5 @@ Competitor                          = Competitor
 ProductPageURL                      = Product page URL
 ConfirmDeleteProductCompetitorPrice = Confirming the removal of the competing price
 DeleteProductCompetitorPrice        = Removal of the competing price
-NewCompetitorPrice                  = NewCompetitorPrice
-
+NewCompetitorPrice                  = New competitor price
+ModifyCompetitorPrice               = Modify competitor price
