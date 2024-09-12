@@ -613,7 +613,7 @@ class CompetitorPrice extends SaturneObject
         ];
 
         $arrayCompetitorPriceByAmountHT = [];
-        $competitorPrices               = $this->fetchAll('', '', 0, 0, ['customsql' => 't.amount_ht IS NOT NULL AND t.fk_product = ' . GETPOST('id')]);
+        $competitorPrices               = $this->fetchAll('', '', 0, 0, ['customsql' => 't.status = ' . self::STATUS_VALIDATED . ' AND t.amount_ht IS NOT NULL AND t.fk_product = ' . GETPOST('id')]);
         $averageAmountHT                = $this->getAverage(GETPOST('id'));
         if (is_array($competitorPrices) && !empty($competitorPrices)) {
             foreach ($competitorPrices as $competitorPrice) {
