@@ -182,7 +182,13 @@ if (empty($reshook)) {
 
     // Action to add record
     if ($action == 'add' && $permissiontoadd) {
-        $object->ref = $refCompetitorPriceMod->getNextValue($object);
+        $object->ref      = $refCompetitorPriceMod->getNextValue($object);
+        $competitorPrices = $object->fetchAll('', '', 0, 0, ['customsql' => 't.fk_soc = ' . GETPOST('fk_soc') . ' AND t.fk_product = ' . $object->fk_product]);
+        if (is_array($competitorPrices) && !empty($competitorPrices)) {
+            foreach ($competitorPrices as $competitorPrice) {
+                $competitorPrice->setValueFrom('status', 0, '', '', 'int', '', $user);
+            }
+        }
     }
 
     $noback = 1;
@@ -435,7 +441,7 @@ if ($object->id > 0) {
 
 		if (!empty($comptetitorPrices)) {
 			foreach ($comptetitorPrices as $competitorPriceDetail) {
-				print '<tr class="oddeven">';
+				print '<tr class="oddeven ' . ($competitorPriceDetail->status == 0 ? 'opacitymedium' : '') . '">';
 				foreach ($competitorPriceDetail->fields as $key => $val) {
 					$cssforfield = (empty($val['csslist']) ? (empty($val['css']) ? '' : $val['css']) : $val['csslist']);
 					if (in_array($val['type'], ['date', 'datetime', 'timestamp'])) {
@@ -455,6 +461,7 @@ if ($object->id > 0) {
 																						'status']) && empty($val['arrayofkeyval'])) {
 						$cssforfield .= ($cssforfield ? ' ' : '') . 'right';
 					}
+
 					//if (in_array($key, array('fk_soc', 'fk_user', 'fk_warehouse'))) $cssforfield = 'tdoverflowmax100';
 					//var_dump($val, $key);
 					if (!empty($arrayfields[$key]['checked'])) {

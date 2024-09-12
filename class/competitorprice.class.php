@@ -61,7 +61,7 @@ class CompetitorPrice extends SaturneObject
 	/**
 	 * @var string String with name of icon for competitorprice. Must be the part after the 'object_' into object_competitorprice.png
 	 */
-	public $picto = 'competitorprice@priseo';
+	public $picto = 'fontawesome_fa-chart-line_fas_#63ACC9';
 
     /**
      * @var array Label status of const.
@@ -113,7 +113,7 @@ class CompetitorPrice extends SaturneObject
         'entity'          => ['type' => 'integer', 'label' => 'Entity', 'enabled' => '1', 'position' => 30, 'notnull' => 1, 'visible' => 0],
         'date_creation'   => ['type' => 'datetime', 'label' => 'DateCreation', 'enabled' => '1', 'position' => 40, 'notnull' => 1, 'visible' => 0],
         'tms'             => ['type' => 'timestamp', 'label' => 'DateModification', 'enabled' => '1', 'position' => 50, 'notnull' => 0, 'visible' => 0],
-        'status'          => ['type' => 'integer', 'label' => 'Status', 'enabled' => '1', 'position' => 60, 'notnull' => 1, 'visible' => 0, 'default' => '1', 'index' => 1, 'arrayofkeyval' => ['0' => 'Draft', '1' => 'Validate']],
+        'status'          => ['type' => 'integer', 'label' => 'Status', 'enabled' => '1', 'position' => 60, 'notnull' => 1, 'visible' => 0, 'default' => 1, 'index' => 1, 'arrayofkeyval' => ['0' => 'Draft', '1' => 'Validate']],
         'label'           => ['type' => 'varchar(255)', 'label' => 'Label', 'enabled' => '1', 'position' => 110, 'notnull' => 0, 'visible' => 1, 'searchall' => 1, 'css' => 'minwidth200'],
         'amount_ht'       => ['type' => 'price', 'label' => 'CompetitorPriceHT', 'enabled' => '1', 'position' => 80, 'notnull' => 0, 'visible' => 1, 'default' => 'null', 'isameasure' => '1'],
         'amount_ttc'      => ['type' => 'price', 'label' => 'CompetitorPriceTTC', 'enabled' => '1', 'position' => 90, 'notnull' => 0, 'visible' => 1, 'default' => 'null', 'isameasure' => '1'],
@@ -189,6 +189,7 @@ class CompetitorPrice extends SaturneObject
 	 */
 	public function create(User $user, bool $notrigger = false): int
 	{
+        $this->status = 1;
 		return $this->createCommon($user, $notrigger);
 	}
 
@@ -555,6 +556,33 @@ class CompetitorPrice extends SaturneObject
 			dol_print_error($this->db);
 		}
 	}
+
+    /**
+     * Return average of amount_ht
+     *
+     * @param  int        $fkProductID ID of product
+     * @return float|null $average     Average of amount_ht
+     */
+    public function getAverage(int $fkProductID = 0): ?float
+    {
+        $sql  = 'SELECT AVG(amount_ht) AS moyenne_amount_ht';
+        $sql .= ' FROM ' . MAIN_DB_PREFIX . $this->table_element . ' as t';
+        $sql .= ' WHERE status = 1 AND fk_product = ' . $fkProductID;
+
+        $average = 0;
+        $result  = $this->db->query($sql);
+        if ($result) {
+            if ($this->db->num_rows($result)) {
+                $obj     = $this->db->fetch_object($result);
+                $average = $obj->moyenne_amount_ht;
+            }
+            $this->db->free($result);
+        } else {
+            dol_print_error($this->db);
+        }
+
+        return $average;
+    }
 
 	/**
 	 * Initialise object with example values
