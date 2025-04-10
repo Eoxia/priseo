@@ -127,13 +127,12 @@ class ActionsPriseo
 							$competitorPrices = $competitorPrice->fetchAll('', '', 0, 0, ['customsql' => 't.status >= 0 AND t.fk_product = ' . $parameters['object']->id]);
 							if (is_array($competitorPrices) && !empty($competitorPrices)) {
                                 $parameters['head'][$headKey][1] .= '<span class="badge marginleftonlyshort">' . count($competitorPrices) . '</span>';
+			                    $this->results = $parameters['head'];
                             }
 						}
 					}
 				}
 			}
-
-			$this->results = $parameters;
 		}
 
 		return 0; // or return 1 to replace standard code

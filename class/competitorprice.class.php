@@ -143,171 +143,27 @@ class CompetitorPrice extends SaturneObject
 	public $fk_user_creat;
 	public $fk_user_modif;
 
-	/**
-	 * Constructor
-	 *
-	 * @param DoliDb $db Database handler
-	 */
-	public function __construct(DoliDB $db)
-	{
-		global $conf, $langs;
+    /**
+     * Constructor
+     *
+     * @param DoliDb $db Database handler
+     */
+    public function __construct(DoliDB $db)
+    {
+        parent::__construct($db, $this->module, $this->element);
+    }
 
-		$this->db = $db;
-
-		if (empty($conf->global->MAIN_SHOW_TECHNICAL_ID) && isset($this->fields['rowid'])) {
-			$this->fields['rowid']['visible'] = 0;
-		}
-		if (empty($conf->multicompany->enabled) && isset($this->fields['entity'])) {
-			$this->fields['entity']['enabled'] = 0;
-		}
-
-		// Unset fields that are disabled
-		foreach ($this->fields as $key => $val) {
-			if (isset($val['enabled']) && empty($val['enabled'])) {
-				unset($this->fields[$key]);
-			}
-		}
-
-		// Translate some data of arrayofkeyval
-		if (is_object($langs)) {
-			foreach ($this->fields as $key => $val) {
-				if (!empty($val['arrayofkeyval']) && is_array($val['arrayofkeyval'])) {
-					foreach ($val['arrayofkeyval'] as $key2 => $val2) {
-						$this->fields[$key]['arrayofkeyval'][$key2] = $langs->trans($val2);
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Create object into database
-	 *
-	 * @param  User $user      User that creates
-	 * @param  bool $notrigger false=launch triggers after, true=disable triggers
-	 * @return int             0 < if KO, ID of created object if OK
-	 */
-	public function create(User $user, bool $notrigger = false): int
-	{
+    /**
+     * Create object into database
+     *
+     * @param  User      $user      User that creates
+     * @param  bool      $notrigger false = launch triggers after, true = disable triggers
+     * @return int                  0 < if KO, ID of created object if OK
+     */
+    public function create(User $user, bool $notrigger = false): int
+    {
         $this->status = 1;
-		return $this->createCommon($user, $notrigger);
-	}
-
-    /**
-     * Load object in memory from the database
-     *
-     * @param  int|string  $id        ID object
-     * @param  string|null $ref       Ref
-     * @param  string      $morewhere More SQL filters (' AND ...')
-     * @return int                    0 < if KO, 0 if not found, > 0 if OK
-     */
-    public function fetch($id, string $ref = null, string $morewhere = ''): int
-    {
-        return $this->fetchCommon($id, $ref, $morewhere);
-    }
-
-
-	/**
-	 * Load list of objects in memory from the database.
-	 *
-	 * @param  string      $sortorder    Sort Order
-	 * @param  string      $sortfield    Sort field
-	 * @param  int         $limit        limit
-	 * @param  int         $offset       Offset
-	 * @param  array       $filter       Filter array. Example array('field'=>'valueforlike', 'customurl'=>...)
-	 * @param  string      $filtermode   Filter mode (AND/OR)
-	 * @return array|int                 int <0 if KO, array of pages if OK
-     * @throws Exception
-	 */
-	public function fetchAll(string $sortorder = '', string $sortfield = '', int $limit = 0, int $offset = 0, array $filter = array(), string $filtermode = 'AND')
-	{
-		dol_syslog(__METHOD__, LOG_DEBUG);
-
-		$records = [];
-
-		$sql = 'SELECT ';
-		$sql .= $this->getFieldList('t');
-		$sql .= ' FROM ' .MAIN_DB_PREFIX.$this->table_element. ' as t';
-		if (isset($this->ismultientitymanaged) && $this->ismultientitymanaged == 1) {
-			$sql .= ' WHERE t.entity IN (' .getEntity($this->element). ')';
-		} else {
-			$sql .= ' WHERE 1 = 1';
-		}
-		// Manage filter
-		$sqlwhere = [];
-		if (count($filter) > 0) {
-			foreach ($filter as $key => $value) {
-				if ($key == 't.rowid' || $key == 't.fk_product' || $key == 't.fk_soc') {
-					$sqlwhere[] = $key. ' = ' .((int) $value);
-				} elseif (in_array($this->fields[$key]['type'], ['date', 'datetime', 'timestamp'])) {
-					$sqlwhere[] = $key." = '".$this->db->idate($value)."'";
-				} elseif ($key == 'customsql') {
-					$sqlwhere[] = $value;
-				} elseif (strpos($value, '%') === false) {
-					$sqlwhere[] = $key. ' IN (' .$this->db->sanitize($this->db->escape($value)). ')';
-				} else {
-					$sqlwhere[] = $key." LIKE '%".$this->db->escape($value)."%'";
-				}
-			}
-		}
-		if (count($sqlwhere) > 0) {
-			$sql .= ' AND (' .implode(' ' .$filtermode. ' ', $sqlwhere). ')';
-		}
-
-		if (!empty($sortfield)) {
-			$sql .= $this->db->order($sortfield, $sortorder);
-		}
-		if (!empty($limit)) {
-			$sql .= $this->db->plimit($limit, $offset);
-		}
-
-		$resql = $this->db->query($sql);
-
-		if ($resql) {
-			$num = $this->db->num_rows($resql);
-			$i = 0;
-			while ($i < ($limit ? min($limit, $num) : $num)) {
-				$obj = $this->db->fetch_object($resql);
-
-				$record = new self($this->db);
-				$record->setVarsFromFetchObj($obj);
-
-				$records[$record->id] = $record;
-
-				$i++;
-			}
-			$this->db->free($resql);
-			return $records;
-		} else {
-			$this->errors[] = 'Error '.$this->db->lasterror();
-			dol_syslog(__METHOD__.' '.join(',', $this->errors), LOG_ERR);
-
-			return -1;
-		}
-	}
-
-    /**
-     * Update object into database
-     *
-     * @param  User $user      User that modifies
-     * @param  bool $notrigger false=launch triggers after, true=disable triggers
-     * @return int             0 < if KO, >0 if OK
-     */
-    public function update(User $user, bool $notrigger = false): int
-    {
-        return $this->updateCommon($user, $notrigger);
-    }
-
-    /**
-     * Delete object in database
-     *
-     * @param  User $user      User that deletes
-     * @param  bool $notrigger false=launch triggers after, true=disable triggers
-     * @return int             0 < if KO, >0 if OK
-     */
-    public function delete(User $user, bool $notrigger = false): int
-    {
-        return $this->deleteCommon($user, $notrigger);
+        return parent::create($user, $notrigger);
     }
 
     /**
@@ -374,17 +230,18 @@ class CompetitorPrice extends SaturneObject
         return 1;
     }
 
-	/**
-	 *  Return a link to the object card (with optionaly the picto)
-	 *
-	 *  @param  int     $withpicto                  Include picto in link (0=No picto, 1=Include picto into link, 2=Only picto)
-	 *  @param  string  $option                     On what the link point to ('nolink', ...)
-	 *  @param  int     $notooltip                  1=Disable tooltip
-	 *  @param  string  $morecss                    Add more css on link
-	 *  @param  int     $save_lastsearch_value      -1=Auto, 0=No save of lastsearch_values when clicking, 1=Save lastsearch_values whenclicking
-	 *  @return	string                              String with URL
-	 */
-	public function getNomUrl(int $withpicto = 0, string $option = '', int $notooltip = 0, string $morecss = '', int $save_lastsearch_value = -1): string
+    /**
+     *  Return a link to the object card (with optionaly the picto)
+     *
+     *  @param  int     $withpicto              Include picto in link (0 = No picto, 1 = Include picto into link, 2 = Only picto)
+     *  @param  string  $option                 On what the link point to ('nolink', ...)
+     *  @param  int     $notooltip              1 = Disable tooltip
+     *  @param  string  $morecss                Add more css on link
+     *  @param  int     $save_lastsearch_value -1 = Auto, 0 = No save of lastsearch_values when clicking, 1 = Save lastsearch_values whenclicking
+     * 	@param	int     $addLabel               0 = Default, 1 = Add label into string, >1 = Add first chars into string
+     *  @return	string                          String with URL
+     */
+	public function getNomUrl(int $withpicto = 0, string $option = '', int $notooltip = 0, string $morecss = '', int $save_lastsearch_value = -1, int $addLabel = 0): string
 	{
 		global $action, $conf, $hookmanager, $langs;
 
@@ -492,18 +349,6 @@ class CompetitorPrice extends SaturneObject
 	}
 
 	/**
-	 *  Return the label of the status
-	 *
-	 *  @param  int		$mode          0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
-	 *  @return	string 			       Label of status
-	 */
-	public function getLibStatut(int $mode = 0): string
-	{
-		return $this->LibStatut($this->status, $mode);
-	}
-
-	// phpcs:disable PEAR.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
-	/**
 	 *  Return the status
 	 *
 	 *  @param	int		$status        Id status
@@ -525,36 +370,6 @@ class CompetitorPrice extends SaturneObject
 		$statusType = 'status'.$status;
 
 		return dolGetStatus($this->labelStatus[$status], $this->labelStatusShort[$status], '', $statusType, $mode);
-	}
-
-	/**
-	 *	Load the info information in the object
-	 *
-	 *	@param  int		$id       ID of object
-	 *	@return	void
-	 */
-	public function info(int $id): void
-    {
-		$sql = 'SELECT rowid, date_creation as datec, tms as datem,';
-		$sql .= ' fk_user_creat, fk_user_modif';
-		$sql .= ' FROM ' .MAIN_DB_PREFIX.$this->table_element. ' as t';
-		$sql .= ' WHERE t.rowid = ' .($id);
-
-		$result = $this->db->query($sql);
-		if ($result) {
-			if ($this->db->num_rows($result)) {
-				$obj = $this->db->fetch_object($result);
-				$this->id = $obj->rowid;
-
-				$this->date_creation     = $this->db->jdate($obj->datec);
-				$this->date_modification = $this->db->jdate($obj->datem);
-				$this->date_validation   = $this->db->jdate($obj->datev);
-			}
-
-			$this->db->free($result);
-		} else {
-			dol_print_error($this->db);
-		}
 	}
 
     /**
@@ -583,17 +398,6 @@ class CompetitorPrice extends SaturneObject
 
         return $average;
     }
-
-	/**
-	 * Initialise object with example values
-	 * ID must be 0 if object instance is a specimen
-	 *
-	 * @return void
-	 */
-	public function initAsSpecimen(): void
-    {
-		$this->initAsSpecimenCommon();
-	}
 
     /**
      * Load dashboard info
