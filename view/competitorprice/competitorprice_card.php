@@ -80,7 +80,7 @@ $extrafields           = new ExtraFields($db);
 $dashboard             = new SaturneDashboard($db, 'priseo');
 $refCompetitorPriceMod = new $conf->global->PRISEO_COMPETITORPRICE_ADDON($db);
 
-$hookmanager->initHooks(['competitorpricecard', 'globalcard']); // Note that conf->hooks_modules contains array
+$hookmanager->initHooks(['competitorpricecard', 'globalcard']);  // Note that conf->hooks_modules contains array
 
 if (!empty($rowid)) {
 	$resultFetch = $competitorPrice->fetch($rowid);

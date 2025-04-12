@@ -1,5 +1,5 @@
 # Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
-# Copyright (C) 2022-2023 EOXIA         <dev@eoxia.fr>
+# Copyright (C) 2022-2025 EVARISK       <technique@evarisk.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,51 +15,18 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #
-# Generic
-#
-
-# Module label 'ModulePriseoName'
-ModulePriseoName = Priseo
-
-# Module description 'ModulePriseoDesc'
-ModulePriseoDesc      = Competitor price comparison
-PriseoDescription     = Competitor price comparison
-PriseoDescriptionLong = Competitor price comparison
-
-#
-# Admin page
-#
-
-PriseoSetup     = Priseo setup
-Settings        = Settings
-PriseoSetupPage = Priseo setup page
-
-#
-# About page
-#
-
-About       = About
-PriseoAbout = About Priseo
-
-#
 # Priseo
 #
 
-# Right - Droit
-LirePriseo    = Lire Priseo
-ReadPriseo    = Read Priseo
-ReadAdminPage = Access the module configuration
+ModulePriseoName = Priseo
+ModulePriseoDesc  = Competitor price comparison
+PriseoDescription = Competitor price comparison
 
 #
-# CompetitorPrice - Prix concurrent
+# CompetitorPrice
 #
 
-# Right - Droit
-ReadCompetitorPrice   = Read competitor prices
-CreateCompetitorPrice = Create/modify competitor prices
-DeleteCompetitorPrice = Delete competitor prices
-
-# Data - Donnée
+# Data
 CompetitorPrice                     = Competitor price
 CompetitorPriceHT                   = HT competitor price
 CompetitorPriceTTC                  = TTC competitor price
@@ -72,3 +39,4 @@ ConfirmDeleteProductCompetitorPrice = Confirming the removal of the competing pr
 DeleteProductCompetitorPrice        = Removal of the competing price
 NewCompetitorPrice                  = New competitor price
 ModifyCompetitorPrice               = Modify competitor price
+CompetitorPriceEvolutionOverTime    = Price evolution over time

@@ -20,6 +20,7 @@ CREATE TABLE llx_priseo_competitorprice(
   entity          integer DEFAULT 1 NOT NULL,
   date_creation   datetime NOT NULL,
   tms             timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  import_key      varchar(14),
   status          integer DEFAULT 1 NOT NULL,
   label           varchar(255),
   amount_ht       double DEFAULT NULL,

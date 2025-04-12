@@ -16,3 +16,6 @@
 -- 1.2.0
 ALTER TABLE `llx_priseo_competitorprice` CHANGE `status` `status` INT NOT NULL DEFAULT '1';
 UPDATE `llx_priseo_competitorprice` SET `status` = 1 WHERE `status` = 0;
+
+-- 21.0.0
+ALTER TABLE `llx_priseo_competitorprice` ADD `import_key` VARCHAR(14) AFTER `tms`;

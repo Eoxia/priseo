@@ -1,5 +1,5 @@
 # Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
-# Copyright (C) 2022-2023 EOXIA         <dev@eoxia.fr>
+# Copyright (C) 2022-2025 EVARISK       <technique@evarisk.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,54 +15,16 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #
-# Générique
-#
-
-# Module label 'ModulePriseoName'
-ModulePriseoName = Priseo
-
-# Module description 'ModulePriseoDesc'
-ModulePriseoDesc      = Comparateur de prix concurrent
-PriseoDescription     = Comparateur de prix concurrent
-PriseoDescriptionLong = Comparateur de prix concurrent
-
-#
-# Page d'administration
-#
-
-Settings        = Réglages
-PriseoSetup     = Configuration du module Priseo
-PriseoSetupPage = Page de configuration du module Priseo
-
-#
-# Page À propos
-#
-
-About       = À propos
-PriseoAbout = À propos de Priseo
-
-#
 # Priseo
 #
 
-# Right - Droit
-LirePriseo    = Consulter Priseo
-ReadPriseo    = Consulter Priseo (read)
-ReadAdminPage = Accéder à la configuration du module
+ModulePriseoName  = Priseo
+ModulePriseoDesc  = Comparateur de prix concurrent
+PriseoDescription = Comparateur de prix concurrent
 
 #
 # CompetitorPrice - Prix concurrent
 #
-
-# Right - Droit
-ReadCompetitorPrice   = Consulter les prix concurrents
-CreateCompetitorPrice = Créer/Modifier les prix concurrents
-DeleteCompetitorPrice = Supprimer les prix concurrents
-
-# Trigger - Déclencheur
-
-
-# Mod Numbering - Modèle de numérotation
 
 # Data - Donnée
 CompetitorPrice                     = Prix concurrent
