@@ -1,6 +1,6 @@
 <?php
 /* Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
- * Copyright (C) 2022-2023 EOXIA         <dev@eoxia.fr>
+ * Copyright (C) 2022-2025 EVARISK       <technique@evarisk.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,39 +19,39 @@
 /**
  * \file    lib/priseo.lib.php
  * \ingroup priseo
- * \brief   Library files with common functions for Priseo
+ * \brief   Library files with common functions for admin conf
  */
 
 /**
- * Prepare admin pages header
+ * Prepare array of tabs for admin
  *
- * @return array
+ * @return array Array of tabs
  */
-function priseoAdminPrepareHead()
+function priseo_admin_prepare_head(): array
 {
     // Global variables definitions
-	global $conf, $langs;
+    global $conf, $langs;
 
     // Load translation files required by the page
     saturne_load_langs();
 
     // Initialize values
-	$h = 0;
-	$head = [];
+    $h    = 0;
+    $head = [];
 
-	$head[$h][0] = dol_buildpath('/priseo/admin/setup.php', 1);
-	$head[$h][1] = '<i class="fas fa-cog pictofixedwidth"></i>' . $langs->trans('Settings');
-	$head[$h][2] = 'settings';
-	$h++;
+    $head[$h][0] = dol_buildpath('priseo/admin/setup.php', 1);
+    $head[$h][1] = $conf->browser->layout == 'classic' ? '<i class="fas fa-cog pictofixedwidth"></i>' . $langs->trans('ModuleSettings') : '<i class="fas fa-cog"></i>';
+    $head[$h][2] = 'settings';
+    $h++;
 
-	$head[$h][0] = dol_buildpath('/priseo/admin/about.php', 1);
-	$head[$h][1] = '<i class="fab fa-readme pictofixedwidth"></i>' . $langs->trans('About');
-	$head[$h][2] = 'about';
-	$h++;
+    $head[$h][0] = dol_buildpath('saturne/admin/about.php?module_name=Priseo', 1);
+    $head[$h][1] = $conf->browser->layout == 'classic' ? '<i class="fab fa-readme pictofixedwidth"></i>' . $langs->trans('About') : '<i class="fab fa-readme"></i>';
+    $head[$h][2] = 'about';
+    $h++;
 
-	complete_head_from_modules($conf, $langs, null, $head, $h, 'priseo@priseo');
+    complete_head_from_modules($conf, $langs, null, $head, $h, 'priseo@priseo');
 
-	complete_head_from_modules($conf, $langs, null, $head, $h, 'priseo@priseo', 'remove');
+    complete_head_from_modules($conf, $langs, null, $head, $h, 'priseo@priseo', 'remove');
 
-	return $head;
+    return $head;
 }
