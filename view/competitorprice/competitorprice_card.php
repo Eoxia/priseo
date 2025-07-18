@@ -38,10 +38,10 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formprojet.class.php';
 
 // Load Saturne libraries
-require_once __DIR__ . '/../../saturne/class/saturnedashboard.class.php';
+require_once __DIR__ . '/../../../saturne/class/saturnedashboard.class.php';
 
-require_once __DIR__ . '/../class/competitorprice.class.php';
-require_once __DIR__ . '/../core/modules/priseo/competitorprice/mod_competitorprice_standard.php';
+require_once __DIR__ . '/../../class/competitorprice.class.php';
+require_once __DIR__ . '/../../core/modules/priseo/competitorprice/mod_competitorprice_standard.php';
 
 // Global variables definitions
 global $conf, $db, $hookmanager, $langs, $user;
@@ -50,7 +50,7 @@ global $conf, $db, $hookmanager, $langs, $user;
 $langs->loadLangs(['priseo@priseo', 'other']);
 
 // Get parameters
-$id                  = GETPOST('id', 'int');
+$id                  = GETPOST('fromid', 'int');
 $rowid               = GETPOST('rowid', 'int');
 $ref                 = GETPOST('ref', 'alpha');
 $action              = GETPOST('action', 'aZ09');
@@ -179,20 +179,26 @@ if (empty($reshook)) {
 
 	//Tricks to use common template
 	$product = $object;
-	$object = $competitorPrice;
+	$object  = $competitorPrice;
 	if (empty($object->id)) {
-	$object->fk_product = $product->id;
+	    $object->fk_product = $product->id;
 	}
 
     // Action to add record
     if ($action == 'add' && $permissiontoadd) {
-        $object->ref      = $refCompetitorPriceMod->getNextValue($object);
+        $object->ref             = $refCompetitorPriceMod->getNextValue($object);
+        $object->fk_product      = GETPOST("product", "int");
+        $object->competitor_date = dol_now();
+
         $competitorPrices = $object->fetchAll('', '', 0, 0, ['customsql' => 't.fk_soc = ' . GETPOST('fk_soc') . ' AND t.fk_product = ' . $object->fk_product]);
         if (is_array($competitorPrices) && !empty($competitorPrices)) {
             foreach ($competitorPrices as $competitorPrice) {
                 $competitorPrice->setValueFrom('status', 0, '', '', 'int', '', $user);
             }
         }
+        setEventMessages('', $langs->trans('RecordCreatedSuccessfully'));
+        header("Location: competitorprice_list.php?fromid=" . $object->fk_product . '&fromtype=product');
+        exit;
     }
 
     $noback = 1;
@@ -207,7 +213,6 @@ if (empty($reshook)) {
 	//Tricks to use common template
 	$object = $product;
 }
-
 
 /*
  * View
@@ -275,33 +280,35 @@ if ($object->id > 0) {
 	}
 	print '</div>';
 
-	if ($action == 'create_competitor_price') {
-		//Tricks to use common template
-		$product = $object;
-		$object = $competitorPrice;
+    if ($action == 'create') {
+        //Tricks to use common template
+        $product = $object;
+        $object  = $competitorPrice;
 
-		if (empty($permissiontoadd)) {
-			accessforbidden($langs->trans('NotEnoughPermissions'), 0, 1);
-			exit;
-		}
+        if (empty($permissiontoadd)) {
+            accessforbidden($langs->trans('NotEnoughPermissions'), 0, 1);
+            exit;
+        }
 
-		print load_fiche_titre($langs->trans('NewCompetitorPrice'), '', 'object_' . $object->picto);
+        print load_fiche_titre($langs->trans('NewCompetitorPrice'), '', 'object_' . $object->picto);
 
-		print '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
-		print '<input type="hidden" name="token" value="' . newToken() . '">';
-		print '<input type="hidden" name="action" value="add">';
-		print '<input type="hidden" name="id" value="' . $product->id . '">';
-		if ($backtopage) {
-			print '<input type="hidden" name="backtopage" value="' . $backtopage . '">';
-		}
-		if ($backtopageforcancel) {
-			print '<input type="hidden" name="backtopageforcancel" value="' . $backtopageforcancel . '">';
-		}
+        print '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">';
+        print '<input type="hidden" name="token" value="' . newToken() . '">';
+        print '<input type="hidden" name="action" value="add">';
+        print '<input type="hidden" name="product" value="' . $object->fk_product . '">';
+        print '<input type="hidden" name="date" value="' . $object->competitor_date . '">';
+        print '<input type="hidden" name="id" value="' . $product->id . '">';
+        if ($backtopage) {
+            print '<input type="hidden" name="backtopage" value="' . $backtopage . '">';
+        }
+        if ($backtopageforcancel) {
+            print '<input type="hidden" name="backtopageforcancel" value="' . $backtopageforcancel . '">';
+        }
 
-		print dol_get_fiche_head();
+        print dol_get_fiche_head();
 
-		// Set some default values
-		//if (! GETPOSTISSET('fieldname')) $_POST['fieldname'] = 'myvalue';
+        // Set some default values
+        //if (! GETPOSTISSET('fieldname')) $_POST['fieldname'] = 'myvalue';
 
         $competitor_date = dol_getdate(dol_now());
 
@@ -311,24 +318,24 @@ if ($object->id > 0) {
         $_POST['competitor_datehour']  = $competitor_date['hours'];
         $_POST['competitor_datemin']   = $competitor_date['minutes'];
 
-		print '<table class="border centpercent tableforfieldcreate">';
+        print '<table class="border centpercent tableforfieldcreate">';
 
-		// Common attributes
-		include DOL_DOCUMENT_ROOT . '/core/tpl/commonfields_add.tpl.php';
+        // Common attributes
+        include DOL_DOCUMENT_ROOT . '/core/tpl/commonfields_add.tpl.php';
 
-		// Other attributes
-		//include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_add.tpl.php';
+        // Other attributes
+        //include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_add.tpl.php';
 
-		print '</table>';
+        print '</table>';
 
-		print dol_get_fiche_end();
+        print dol_get_fiche_end();
 
-		print $form->buttonsSaveCancel('Create');
+        print $form->buttonsSaveCancel('Create');
 
-		print '</form>';
+        print '</form>';
 
-		$object = $product;
-	} elseif ($action == 'update_competitor_price') {
+        $object = $product;
+    } elseif ($action == 'update_competitor_price') {
 		//Tricks to use common template
 		$product = $object;
 		$object = $competitorPrice;

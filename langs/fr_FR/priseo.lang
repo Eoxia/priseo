@@ -40,3 +40,4 @@ DeleteProductCompetitorPrice        = Suppression du prix concurrent
 NewCompetitorPrice                  = Nouveaux prix concurrent
 ModifyCompetitorPrice               = Modifier le prix concurrent
 CompetitorPriceEvolutionOverTime    = Évolution du prix dans le temps
+CompetitorpriceList                 = Liste des prix concurrent
