@@ -193,7 +193,7 @@ if ($mode == 'pwa') {
     $conf->dol_hide_leftmenu = 1;
 }
 
-$title = $langs->trans(ucfirst($object->element) . 'List');
+$title = $langs->transnoentities(ucfirst($object->element) . 'List');
 saturne_header(0,'', $title, $helpUrl ?? '', '', 0, 0, [], [], '', 'mod-' . $object->module . '-' . $object->element . ' page-list bodyforlist');
 
 if (!empty($fromType)) {
