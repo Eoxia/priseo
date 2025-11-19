@@ -203,7 +203,7 @@ if (!empty($fromType)) {
     $linkBack = '<a href="' . dol_buildpath($fromType . '/list.php?restore_lastsearch_values=1', 1) . '">' . $langs->trans('BackToList') . '</a>';
     saturne_banner_tab($product, 'fromtype=' . $fromType . '&fromid', $linkBack, 1, 'rowid');
 
-    $moreUrlParameters = '&fromtype=' . $fromType . '&fromid=' . $fromId . '&mode=' . $mode;
+    $moreUrlParameters = '&fromid=' . $fromId . '&fromtype=' . $fromType;
 }
 
 if ($fromId > 0) {

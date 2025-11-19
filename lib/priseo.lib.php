@@ -39,6 +39,11 @@ function priseo_admin_prepare_head(): array
     $h    = 0;
     $head = [];
 
+    $head[$h][0] = dol_buildpath('saturne/admin/object.php', 1) . '?module_name=Priseo&object_type=competitorprice';
+    $head[$h][1] = $conf->browser->layout == 'classic' ? '<i class="fas fa-chart-line pictofixedwidth"></i>' . $langs->trans('CompetitorPrice') : '<i class="fas fa-chart-line"></i>';
+    $head[$h][2] = 'answer';
+    $h++;
+
     $head[$h][0] = dol_buildpath('priseo/admin/setup.php', 1);
     $head[$h][1] = $conf->browser->layout == 'classic' ? '<i class="fas fa-cog pictofixedwidth"></i>' . $langs->trans('ModuleSettings') : '<i class="fas fa-cog"></i>';
     $head[$h][2] = 'settings';
