@@ -279,7 +279,7 @@ class CompetitorPrice extends SaturneObject
      * @param  int[]|int $categories Category or categories IDs
      * @return float|int
      */
-    public function setCategories($categories)
+    public function setCategories($categories, string $typeCateg = '', bool $removeExisting = false): int
     {
         return 1;
     }
