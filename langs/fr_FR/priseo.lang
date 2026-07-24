@@ -29,6 +29,7 @@ PriseoDescription = Comparateur de prix concurrent
 # Data - Donnée
 CompetitorPrice                     = Prix concurrent
 Competitorprice                     = Prix concurrent
+CompetitorpriceList                 = Prix concurrents
 CompetitorPriceHT                   = Prix concurrent HT
 CompetitorPriceTTC                  = Prix concurrent TTC
 CompetitorPrices                    = Prix concurrents
