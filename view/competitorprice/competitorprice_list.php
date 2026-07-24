@@ -204,6 +204,10 @@ if (!empty($fromType)) {
     saturne_banner_tab($product, 'fromtype=' . $fromType . '&fromid', $linkBack, 1, 'rowid');
 
     $moreUrlParameters = '&fromid=' . $fromId . '&fromtype=' . $fromType;
+
+    // The search form posts on PHP_SELF without any query string : without these the product
+    // context is lost on every filter / column change / sort and the list is not rendered anymore
+    $formMoreParams = ['fromid' => $fromId, 'fromtype' => $fromType];
 }
 
 if ($fromId > 0) {
@@ -228,7 +232,15 @@ if ($fromId > 0) {
 //    }
 //    print '</td>';
 
+    // Force the list on the product we come from, whatever the user search criteria are.
+    // Dropped right after the query is built so the product context is not shown as an active
+    // user filter : it is already carried over by $formMoreParams
+    $search['fk_product'] = $fromId;
+
     require_once __DIR__ . '/../../../saturne/core/tpl/list/objectfields_list_build_sql_select.tpl.php';
+
+    unset($search['fk_product']);
+
     require_once __DIR__ . '/../../../saturne/core/tpl/list/objectfields_list_header.tpl.php';
     require_once __DIR__ . '/../../../saturne/core/tpl/list/objectfields_list_search_input.tpl.php';
     require_once __DIR__ . '/../../../saturne/core/tpl/list/objectfields_list_search_title.tpl.php';

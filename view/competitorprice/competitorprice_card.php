@@ -106,7 +106,8 @@ if (empty($resHook)) {
 
     // Action to add record
     if ($action == 'add' && $permissiontoadd) {
-        $competitorPrices = $object->fetchAll('', '', 0, 0, ['customsql' => 't.fk_soc = ' . GETPOST('fk_soc') . ' AND t.fk_product = ' . $object->fk_product]);
+        // $object is still empty here (nothing fetched on a creation), the values come from the posted form
+        $competitorPrices = $object->fetchAll('', '', 0, 0, ['customsql' => 't.fk_soc = ' . GETPOSTINT('fk_soc') . ' AND t.fk_product = ' . GETPOSTINT('fk_product')]);
         if (is_array($competitorPrices) && !empty($competitorPrices)) {
             foreach ($competitorPrices as $competitorPrice) {
                 $competitorPrice->setValueFrom('status', 0, '', '', 'int', '', $user);
@@ -160,13 +161,21 @@ if ($action == 'create') {
 
     print dol_get_fiche_head();
 
-    $competitor_date = dol_getdate(dol_now());
+    // fk_product and competitor_date are hidden on the creation form (visible = -2), so they are never
+    // posted and the record ends up without any product nor date. Post them along with the form.
+    $competitorDate = dol_getdate(dol_now());
 
-    $_POST['competitor_dateyear']  = $competitor_date['year'];
-    $_POST['competitor_datemonth'] = $competitor_date['mon'];
-    $_POST['competitor_dateday']   = $competitor_date['mday'];
-    $_POST['competitor_datehour']  = $competitor_date['hours'];
-    $_POST['competitor_datemin']   = $competitor_date['minutes'];
+    print '<input type="hidden" name="fromid" value="' . $fromId . '">';
+    print '<input type="hidden" name="fromtype" value="' . $fromType . '">';
+    if ($fromType == 'product' && $fromId > 0) {
+        print '<input type="hidden" name="fk_product" value="' . $fromId . '">';
+    }
+    print '<input type="hidden" name="competitor_date" value="' . dol_print_date(dol_now(), 'dayhour') . '">';
+    print '<input type="hidden" name="competitor_dateyear" value="' . $competitorDate['year'] . '">';
+    print '<input type="hidden" name="competitor_datemonth" value="' . $competitorDate['mon'] . '">';
+    print '<input type="hidden" name="competitor_dateday" value="' . $competitorDate['mday'] . '">';
+    print '<input type="hidden" name="competitor_datehour" value="' . $competitorDate['hours'] . '">';
+    print '<input type="hidden" name="competitor_datemin" value="' . $competitorDate['minutes'] . '">';
 
     print '<table class="border centpercent tableforfieldcreate">';
 
