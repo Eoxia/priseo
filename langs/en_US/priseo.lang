@@ -28,6 +28,8 @@ PriseoDescription = Competitor price comparison
 
 # Data
 CompetitorPrice                     = Competitor price
+Competitorprice                     = Competitor price
+CompetitorpriceList                 = Competitor prices
 CompetitorPriceHT                   = HT competitor price
 CompetitorPriceTTC                  = TTC competitor price
 CompetitorPrices                    = Competitor prices
@@ -37,6 +39,6 @@ Competitor                          = Competitor
 ProductPageURL                      = Product page URL
 ConfirmDeleteProductCompetitorPrice = Confirming the removal of the competing price
 DeleteProductCompetitorPrice        = Removal of the competing price
-NewCompetitorPrice                  = New competitor price
+NewCompetitorprice                  = New competitor price
 ModifyCompetitorPrice               = Modify competitor price
 CompetitorPriceEvolutionOverTime    = Price evolution over time
