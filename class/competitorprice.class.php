@@ -211,13 +211,13 @@ class CompetitorPrice extends SaturneObject
      * Create object into database
      *
      * @param  User      $user      User that creates
-     * @param  bool      $notrigger false = launch triggers after, true = disable triggers
+     * @param  int       $noTrigger 0 = launch triggers after, 1 = disable triggers
      * @return int                  0 < if KO, ID of created object if OK
      */
-    public function create(User $user, bool $notrigger = false): int
+    public function create(User $user, int $noTrigger = 0): int
     {
         $this->status = 1;
-        return parent::create($user, $notrigger);
+        return parent::create($user, $noTrigger);
     }
 
     /**
