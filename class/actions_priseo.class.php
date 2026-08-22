@@ -93,7 +93,7 @@ class ActionsPriseo
             $competitorPrice->fetch('', '', ' ORDER BY t.rowid DESC');
 
             $out  = '<tr><td>';
-            $out .= img_picto('', $competitorPrice->picto . '_1.2em', 'class="pictoModule"') . ucfirst($this->module) . ' (' . dol_print_date($competitorPrice->date_creation, 'day') . ') - ' . price($competitorPrice->getAverage($object->id), 0, '', 1, -1, -1, 'auto') . ' HT</td><td>';
+            $out .= img_picto('', $competitorPrice->picto . '_1.2em', 'height="14"') . ucfirst($this->module) . ' (' . dol_print_date($competitorPrice->date_creation, 'day') . ') - ' . price($competitorPrice->getAverage($object->id), 0, '', 1, -1, -1, 'auto') . ' HT</td><td>';
 
             if (!empty($minPrices->amount_ht) && $object->price > $minPrices->amount_ht) {
                 $minPrice = $minPrices->amount_ht;
