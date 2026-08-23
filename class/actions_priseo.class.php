@@ -160,4 +160,26 @@ class ActionsPriseo
 
         return 0; // or return 1 to replace standard code
     }
+
+    /**
+     * Overwrite getElementProperties
+     *
+     * @param array $parameters Hook parameters
+     * @param Object $object The object
+     * @param string $action The action
+     * @param HookManager $hookmanager The hook manager
+     * @return int
+     */
+    public function getElementProperties($parameters, &$object, &$action, $hookmanager)
+    {
+        if ($parameters['elementType'] == 'competitorprice') {
+            $hookmanager->resArray = array_replace($parameters['elementProperties'], array(
+                'module' => 'priseo',
+                'classpath' => 'priseo/class'
+            ));
+            return 1;
+        }
+
+        return 0;
+    }
 }

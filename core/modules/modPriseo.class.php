@@ -123,7 +123,8 @@ class modPriseo extends DolibarrModules
             /* BEGIN MODULEBUILDER HOOKSCONTEXTS */
             'hooks' => [
                 'main',
-                'productpricecard'
+                'productpricecard',
+                'elementproperties'
             ],
             /* END MODULEBUILDER HOOKSCONTEXTS */
             // Set this to 1 if features of module are opened to external users
