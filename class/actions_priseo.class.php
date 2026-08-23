@@ -174,7 +174,7 @@ class ActionsPriseo
     {
         if ($parameters['elementType'] == 'competitorprice') {
             $base = is_array($parameters['elementProperties']) ? $parameters['elementProperties'] : array();
-            $hookmanager->resArray = array_replace($base, array(
+            $this->results = array_replace($base, array(
                 'module' => 'priseo',
                 'classpath' => 'priseo/class',
                 'classfile' => 'competitorprice',
