@@ -93,7 +93,7 @@ class ActionsPriseo
             $competitorPrice->fetch('', '', ' ORDER BY t.rowid DESC');
 
             $out  = '<tr><td>';
-            $out .= img_picto('', $competitorPrice->picto . '_1.2em', 'class="pictoModule"') . ucfirst($this->module) . ' (' . dol_print_date($competitorPrice->date_creation, 'day') . ') - ' . price($competitorPrice->getAverage($object->id), 0, '', 1, -1, -1, 'auto') . ' HT</td><td>';
+            $out .= img_picto('', $competitorPrice->picto . '_1.2em', 'height="14"') . ucfirst($this->module) . ' (' . dol_print_date($competitorPrice->date_creation, 'day') . ') - ' . price($competitorPrice->getAverage($object->id), 0, '', 1, -1, -1, 'auto') . ' HT</td><td>';
 
             if (!empty($minPrices->amount_ht) && $object->price > $minPrices->amount_ht) {
                 $minPrice = $minPrices->amount_ht;
@@ -159,5 +159,30 @@ class ActionsPriseo
         }
 
         return 0; // or return 1 to replace standard code
+    }
+
+    /**
+     * Overwrite getElementProperties
+     *
+     * @param array $parameters Hook parameters
+     * @param Object $object The object
+     * @param string $action The action
+     * @param HookManager $hookmanager The hook manager
+     * @return int
+     */
+    public function getElementProperties($parameters, &$object, &$action, $hookmanager)
+    {
+        if ($parameters['elementType'] == 'competitorprice') {
+            $base = is_array($parameters['elementProperties']) ? $parameters['elementProperties'] : array();
+            $this->results = array_replace($base, array(
+                'module' => 'priseo',
+                'classpath' => 'priseo/class',
+                'classfile' => 'competitorprice',
+                'classname' => 'CompetitorPrice'
+            ));
+            return 1;
+        }
+
+        return 0;
     }
 }

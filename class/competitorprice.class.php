@@ -121,8 +121,8 @@ class CompetitorPrice extends SaturneObject
         'import_key'      => ['type' => 'varchar(14)',  'label' => 'ImportId',           'enabled' => 1, 'position' => 50,  'notnull' => 0,  'visible' => -2, 'index' => 0],
         'status'          => ['type' => 'integer',      'label' => 'Status',             'enabled' => 1, 'position' => 60,  'notnull' => 1,  'visible' => -2, 'default' => 1, 'index' => 1, 'arrayofkeyval' => [1 => 'Validate']],
         'label'           => ['type' => 'varchar(255)', 'label' => 'Label',              'enabled' => 1, 'position' => 70,  'notnull' => 0,  'visible' => 1, 'alwayseditable' => 1, 'searchall' => 1, 'showoncombobox' => 2],
-        'amount_ht'       => ['type' => 'price',        'label' => 'CompetitorPriceHT',  'enabled' => 1, 'position' => 80,  'notnull' => 0,  'visible' => 1, 'default' => 'null'],
-        'amount_ttc'      => ['type' => 'price',        'label' => 'CompetitorPriceTTC', 'enabled' => 1, 'position' => 90,  'notnull' => 0,  'visible' => 1, 'default' => 'null'],
+        'amount_ht'       => ['type' => 'double(24,8)', 'label' => 'CompetitorPriceHT',  'enabled' => 1, 'position' => 80,  'notnull' => 0,  'visible' => 1, 'default' => 'null'],
+        'amount_ttc'      => ['type' => 'double(24,8)', 'label' => 'CompetitorPriceTTC', 'enabled' => 1, 'position' => 90,  'notnull' => 0,  'visible' => 1, 'default' => 'null'],
         'vat'             => ['type' => 'varchar(10)',  'label' => 'VAT',                'enabled' => 1, 'position' => 100, 'notnull' => 0,  'visible' => -2],
         'url_competitor'  => ['type' => 'url',          'label' => 'ProductPageURL',     'enabled' => 1, 'position' => 110, 'notnull' => 0,  'visible' => 1, 'cssview' => 'wordbreak'],
         'competitor_date' => ['type' => 'datetime',     'label' => 'CompetitorDate',     'enabled' => 1, 'position' => 120, 'notnull' => 1,  'visible' => -2],
@@ -393,5 +393,25 @@ class CompetitorPrice extends SaturneObject
         $array['data'] = $arrayCompetitorPriceByAmountHT;
 
         return $array;
+    }
+
+    public function setValueFrom($field, $value, $table = '', $id = null, $format = '', $id_field = '', $fuser = null, $trigkey = '', $fk_user_field = 'fk_user_modif')
+    {
+        if ($field === 'amount_ht' || $field === 'amount_ttc') {
+            // Clean the value manually to be 100% sure it's a valid float format
+            if (is_string($value)) {
+                $value = trim(str_replace([' ', ','], ['', '.'], $value));
+            }
+            if ($value === '' || $value === null) {
+                $value = null; // Save as NULL if empty
+            } else {
+                $value = (float) $value;
+            }
+        }
+
+        $res = parent::setValueFrom($field, $value, $table, $id, $format, $id_field, $fuser, $trigkey, $fk_user_field);
+
+        // Optional: Recalculate the other field if needed, but for now we just ensure it saves.
+        return $res;
     }
 }

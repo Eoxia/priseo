@@ -1,4 +1,4 @@
-<?php
+<?php ini_set('display_errors', 1); error_reporting(E_ALL);
 /* Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
  * Copyright (C) 2022-2025 EVARISK <technique@evarisk.com>
  *
@@ -115,14 +115,7 @@ if (empty($resHook)) {
         }
     }
 
-    $noback = 1;
     require_once DOL_DOCUMENT_ROOT . '/core/actions_addupdatedelete.inc.php';
-
-    if ($action == 'confirm_clone' && $permissiontoadd) {
-        setEventMessages('', $langs->trans('RecordCreatedSuccessfully'));
-        header("Location: " . $_SERVER['PHP_SELF'] . '?id=' . $id); // Open record of new object
-        exit;
-    }
 }
 
 
@@ -152,7 +145,7 @@ if ($action == 'create') {
     if ($backtopageforcancel) {
         print '<input type="hidden" name="backtopageforcancel" value="' . $backtopageforcancel . '">';
     }
-    if ($backtopagejsfields) {
+    if (!empty($backtopagejsfields)) {
         print '<input type="hidden" name="backtopagejsfields" value="' . $backtopagejsfields . '">';
     }
     if ($dol_openinpopup) {
