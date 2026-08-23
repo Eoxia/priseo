@@ -173,9 +173,12 @@ class ActionsPriseo
     public function getElementProperties($parameters, &$object, &$action, $hookmanager)
     {
         if ($parameters['elementType'] == 'competitorprice') {
-            $hookmanager->resArray = array_replace($parameters['elementProperties'], array(
+            $base = is_array($parameters['elementProperties']) ? $parameters['elementProperties'] : array();
+            $hookmanager->resArray = array_replace($base, array(
                 'module' => 'priseo',
-                'classpath' => 'priseo/class'
+                'classpath' => 'priseo/class',
+                'classfile' => 'competitorprice',
+                'classname' => 'CompetitorPrice'
             ));
             return 1;
         }
