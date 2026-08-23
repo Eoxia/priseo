@@ -394,4 +394,11 @@ class CompetitorPrice extends SaturneObject
 
         return $array;
     }
+
+    public function setValueFrom($field, $value, $table = '', $id = null, $format = '', $id_field = '', $fuser = null, $trigkey = '', $fk_user_field = 'fk_user_modif')
+    {
+        $log = "setValueFrom CALLED! field=$field, value=$value, id=$id, format=$format\n";
+        file_put_contents(dol_buildpath('/priseo/debug.log', 0), $log, FILE_APPEND);
+        return parent::setValueFrom($field, $value, $table, $id, $format, $id_field, $fuser, $trigkey, $fk_user_field);
+    }
 }
