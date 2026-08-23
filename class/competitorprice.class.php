@@ -394,4 +394,24 @@ class CompetitorPrice extends SaturneObject
 
         return $array;
     }
+
+    public function setValueFrom($field, $value, $table = '', $id = null, $format = '', $id_field = '', $fuser = null, $trigkey = '', $fk_user_field = 'fk_user_modif')
+    {
+        if ($field === 'amount_ht' || $field === 'amount_ttc') {
+            // Clean the value manually to be 100% sure it's a valid float format
+            if (is_string($value)) {
+                $value = trim(str_replace([' ', ','], ['', '.'], $value));
+            }
+            if ($value === '' || $value === null) {
+                $value = null; // Save as NULL if empty
+            } else {
+                $value = (float) $value;
+            }
+        }
+
+        $res = parent::setValueFrom($field, $value, $table, $id, $format, $id_field, $fuser, $trigkey, $fk_user_field);
+
+        // Optional: Recalculate the other field if needed, but for now we just ensure it saves.
+        return $res;
+    }
 }
