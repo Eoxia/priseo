@@ -22,10 +22,13 @@
  */
 
 // Load Priseo environment
-if (!file_exists('../../priseo.main.inc.php')) {
+if (file_exists('../../priseo.main.inc.php')) {
+    require_once __DIR__ . '/../../priseo.main.inc.php';
+} elseif (file_exists('../../../priseo.main.inc.php')) {
+    require_once __DIR__ . '/../../../priseo.main.inc.php';
+} else {
     die('Include of priseo main fails');
 }
-require_once __DIR__ . '/../../priseo.main.inc.php';
 
 // Load Dolibarr libraries
 require_once DOL_DOCUMENT_ROOT . '/core/lib/product.lib.php';
