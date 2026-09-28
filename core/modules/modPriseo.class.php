@@ -82,7 +82,7 @@ class modPriseo extends DolibarrModules
         //$this->editor_squarred_logo = ''; // Must be image filename into the priseo/img directory followed with @priseo. Example: 'priseo.png@priseo'
 
         // Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
-        $this->version = '21.0.0';
+        $this->version = '23.0.0';
         // Url to the file with your last numberversion of this module
         //$this->url_last_version = 'http://www.example.com/versionmodule.txt';
 
@@ -156,8 +156,8 @@ class modPriseo extends DolibarrModules
 
         // Prerequisites
         $this->phpmin                  = [7, 4];  // Minimum version of PHP required by module
-        $this->need_dolibarr_version   = [20, 0]; // Minimum version of Dolibarr required by module
-        // $this->max_dolibarr_version = [21, 0]; // Maximum version of Dolibarr required by module
+        $this->need_dolibarr_version   = [23, 0]; // Minimum version of Dolibarr required by module
+        $this->max_dolibarr_version    = [24, 0]; // Maximum version of Dolibarr supported by module
         $this->need_javascript_ajax    = 0;
 
         // Messages at activation

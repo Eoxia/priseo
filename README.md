@@ -3,7 +3,7 @@
 ## Informations
 
 - Numéro du module : 436350
-- Dernière mise à jour : 11/04/2025
+- Dernière mise à jour : 28/09/2026
 - Éditeur : [Eoxia](https://eoxia.com)
 - Thème : Eldy Menu
 - Licence : GPLv3
@@ -11,10 +11,10 @@
 
 ### Version
 
-- Version : 21.0.0
+- Version : 23.0.0
 - PHP : 7.4.33
-- Compatibilité : Dolibarr 20.0.0 - 21.0.1
-- Saturne Framework : 1.8.0
+- Compatibilité : Dolibarr 23.0.0 - 24.0.0
+- Saturne Framework : 23.2.1
 
 ## Liens
 
@@ -22,7 +22,7 @@
 - Demo : [Demo Priseo](https://demodoli.digirisk.com) - ID: demo - Password: demo
 - Documentation : [Wiki Priseo](https://wiki.dolibarr.org/index.php/Module_Priseo)
 - Projet Github : [Projet Priseo](https://github.com/Eoxia/priseo/projects?query=is%3Aopen)
-- Saturne Framework : [Télécharger Saturne](https://dolistore.com/fr/modules/1906-Saturne.html)
+- Saturne Framework : 23.2.1
 - D'autres modules développés par Eoxia disponible sur [Dolistore.com](https://dolistore.com)
 
 ## Fonctionnalités
