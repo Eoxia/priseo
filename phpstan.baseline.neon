@@ -1,0 +1,133 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$id of method SaturneObject\:\:fetch\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: class/actions_priseo.class.php
+
+		-
+			message: '#^Call to function property_exists\(\) with CompetitorPrice and ''competitor_date'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Call to function property_exists\(\) with CompetitorPrice and ''date_creation'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Call to function property_exists\(\) with CompetitorPrice and ''ref'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Cannot access property \$moyenne_amount_ht on object\|false\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Class DoliDB referenced with incorrect case\: DoliDb\.$#'
+			identifier: class.nameCase
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^PHPDoc tag @return with type float\|int is not subtype of native type int\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^PHPDoc type array of property CompetitorPrice\:\:\$fields is not covariant with PHPDoc type array\<string, array\{type\: string, label\: string, langfile\?\: string, enabled\: int\<0, 2\>\|string, position\: int, notnull\?\: int, visible\: int\<\-6, 6\>\|string, alwayseditable\?\: int\<0, 1\>\|string, \.\.\.\}\> of overridden property CommonObject\:\:\$fields\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^PHPDoc type int of property CompetitorPrice\:\:\$isextrafieldmanaged is not covariant with PHPDoc type int\<0, 1\> of overridden property SaturneObject\:\:\$isextrafieldmanaged\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^PHPDoc type int of property CompetitorPrice\:\:\$ismultientitymanaged is not covariant with PHPDoc type int\<0, 1\>\|string of overridden property SaturneObject\:\:\$ismultientitymanaged\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^PHPDoc type int\|string of property CompetitorPrice\:\:\$date_creation is not covariant with PHPDoc type ''''\|int\|null of overridden property CommonObject\:\:\$date_creation\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^PHPDoc type int\|string of property CompetitorPrice\:\:\$tms is not covariant with PHPDoc type int of overridden property CommonObject\:\:\$tms\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Parameter \#1 \$fkProductID of method CompetitorPrice\:\:getAverage\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Property CommonObject\:\:\$context \(array\<string, mixed\>\) does not accept string\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Property CompetitorPrice\:\:\$competitor_date has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Property CompetitorPrice\:\:\$fk_product has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Property CompetitorPrice\:\:\$fk_soc has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Property CompetitorPrice\:\:\$url_competitor has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: class/competitorprice.class.php
+
+		-
+			message: '#^Parameter \#4 \$id of method CommonObject\:\:setValueFrom\(\) expects int\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: view/competitorprice/competitorprice_card.php
+
+		-
+			message: '#^Loose comparison using \=\= between '''' and ''pwa'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 2
+			path: view/competitorprice/competitorprice_list.php
+
+		-
+			message: '#^Negated boolean expression is always true\.$#'
+			identifier: booleanNot.alwaysTrue
+			count: 2
+			path: view/competitorprice/competitorprice_list.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: view/competitorprice/competitorprice_list.php
