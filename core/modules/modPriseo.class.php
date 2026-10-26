@@ -145,7 +145,7 @@ class modPriseo extends DolibarrModules
         // A condition to hide module
         $this->hidden = getDolGlobalInt('MODULE_PRISEO_DISABLED'); // A condition to disable module
         // List of module class names as string that must be enabled if this module is enabled. Example: array('always1'=>'modModuleToEnable1','always2'=>'modModuleToEnable2', 'FR1'=>'modModuleToEnableFR'...)
-        $this->depends = ['modProduct'];
+        $this->depends = ['modProduct', 'modSaturne'];
         // List of module class names as string to disable if this one is disabled. Example: array('modModuleToDisable1', ...)
         $this->requiredby = [];
         // List of module class names as string this module is in conflict with. Example: array('modModuleToDisable1', ...)
@@ -258,7 +258,18 @@ class modPriseo extends DolibarrModules
      */
     public function init($options = ''): int
     {
-        global $conf;
+        global $conf, $langs;
+
+        // Saturne provides the functions used below : refuse the activation rather than a fatal error when it is missing
+        if (!function_exists('saturne_load_langs')) {
+            $this->error = $langs->trans('activateModuleDependNotSatisfied', $this->name, 'modSaturne', $this->name);
+            return -1;
+        }
+
+        // Dolibarr runs init() before activating $this->depends : activate them first
+        if (function_exists('saturne_activate_module_dependencies') && saturne_activate_module_dependencies($this) < 0) {
+            return -1;
+        }
 
         // Create tables of module at module activation
         $result = $this->_load_tables('/priseo/sql/');
