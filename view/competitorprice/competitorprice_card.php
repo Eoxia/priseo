@@ -1,4 +1,4 @@
-<?php ini_set('display_errors', 1); error_reporting(E_ALL);
+<?php
 /* Copyright (C) 2022      Florian HENRY <floria.henry@scopen.fr>
  * Copyright (C) 2022-2025 EVARISK <technique@evarisk.com>
  *
