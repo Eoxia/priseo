@@ -129,7 +129,8 @@ if (empty($resHook)) {
 $title    = $langs->trans('CompetitorPrice');
 $help_url = 'FR:Module_Priseo';
 
-llxHeader('', $title, $help_url);
+// Modern back office theme of Saturne: its stylesheet and the class it is scoped by, as saturne_header() does
+llxHeader('', $title, $help_url, '', 0, 0, [], ['/saturne/css/saturne.min.css'], '', 'saturne-theme');
 
 // Part to create
 if ($action == 'create') {
