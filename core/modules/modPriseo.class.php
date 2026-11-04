@@ -191,9 +191,9 @@ class modPriseo extends DolibarrModules
         // Array to add new pages in new tabs
         /* BEGIN MODULEBUILDER TABS */
         $this->tabs   = [];
-        $pictoPath    = dol_buildpath('custom/priseo/img/priseo_color.png', 1);
+        $pictoPath    = dol_buildpath('/priseo/img/priseo_color.png', 1);
         $pictoPriseo  = img_picto('', $pictoPath, 'class="imgTabTitle paddingright marginrightonlyshort"', 1, 0, 0, '');
-        $this->tabs[] = ['data'=>'product:+competitorprice:' . $pictoPriseo . ' ' . $langs->transnoentities('CompetitorPrice') . ':priseo@priseo:$user->hasRight(\'priseo\', \'competitorprice\', \'read\'):/custom/priseo/view/competitorprice/competitorprice_list.php?fromid=__ID__&fromtype=product'];
+        $this->tabs[] = ['data'=>'product:+competitorprice:' . $pictoPriseo . ' ' . $langs->transnoentities('CompetitorPrice') . ':priseo@priseo:$user->hasRight(\'priseo\', \'competitorprice\', \'read\'):/priseo/view/competitorprice/competitorprice_list.php?fromid=__ID__&fromtype=product'];
         /* END MODULEBUILDER TABS */
 
         // Dictionaries
