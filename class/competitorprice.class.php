@@ -182,6 +182,11 @@ class CompetitorPrice extends SaturneObject
      */
     public ?float $amount_ttc;
 
+    /**
+     * @var string|null VAT rate
+     */
+    public $vat;
+
 	public $url_competitor;
 	public $competitor_date;
 	public $fk_product;
