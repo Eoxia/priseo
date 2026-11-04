@@ -254,10 +254,10 @@ class CompetitorPrice extends SaturneObject
         }
 
         // Create clone
-        $object->context   = 'createfromclone';
+        $object->context['createfromclone'] = 'createfromclone';
         $competitorPriceID = $object->create($user);
 
-        unset($object->context);
+        unset($object->context['createfromclone']);
 
         // End
         if ($competitorPriceID > 0) {
